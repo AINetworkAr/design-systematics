@@ -1,29 +1,33 @@
-# The System Design Primer
+<div dir="rtl" style="padding: 10px;">
+  <h1 style="text-align: center;">تصميم النظم</h1>
+</div>
 
+<br></br>
 <p align="center">
   <img src="images/jj3A5N8.png">
   <br/>
 </p>
 
-## Motivation
-
-> Learn how to design large-scale systems.
+## الأهداف
+> تعلم كيفية تصميم أنظمة ذات نطاق واسع.
 >
-> Prep for the system design interview.
+> التحضير لمقابلة تصميم الأنظمة.
 
-### Learn how to design large-scale systems
 
-Learning how to design scalable systems will help you become a better engineer.
+### تعلم كيفية تصميم أنظمة ذات نطاق واسع
 
-System design is a broad topic.  There is a **vast amount of resources scattered throughout the web** on system design principles.
+تعلم كيفية تصميم الأنظمة القابلة للتوسع سيساعدك على أن تصبح مهندسًا أفضل.
 
-This repo is an **organized collection** of resources to help you learn how to build systems at scale.
+تصميم الأنظمة هو موضوع واسع. هناك **كمية ضخمة من المصادر المتناثرة على شبكة الإنترنت** حول مبادئ تصميم الأنظمة.
 
-### Learn from the open source community
+هذا المشروع هو **مجموعة منسقة** من المصادر لمساعدتك على تعلم كيفية بناء الأنظمة على نطاق واسع.
 
-This is a continually updated, open source project.
+### تعلم من مجتمع المصادر المفتوحة
 
-[Contributions](#contributing) are welcome!
+هذا هو مشروع مفتوح المصدر ويتم تحديثه باستمرار.
+
+[المساهمات](#contributing) مرحب بها!
+
 
 ### Prep for the system design interview
 
