@@ -29,35 +29,42 @@
 [المساهمات](#مساهمة) مرحب بها!
 
 
+<div dir="rtl">
+
 ### التحضير لمقابلة تصميم الأنظمة
 
 بالإضافة إلى المقابلات البرمجية، يعتبر تصميم الأنظمة من **المكونات الضرورية** في **عملية المقابلة الفنية** في العديد من شركات التكنولوجيا.
 
 **قم بممارسة الأسئلة الشائعة لمقابلة تصميم الأنظمة** وقارن نتائجك مع **الحلول النموذجية**: مناقشات، كود، ورسوم بيانية.
 
-المواضيع الإضافية للتحضير للمقابلة:
+المواضيع الإضافية للتحضير لمقابلة عمل:
+<br></br>
 
 * [دليل الدراسة](#دليل-الدراسة)
-* [كيفية التعامل مع سؤال مقابلة تصميم الأنظمة](#كيفية-التعامل-مع-سؤال-مقابلة-تصميم-الأنظمة)
-* [أسئلة مقابلة تصميم الأنظمة، **مع الحلول**](#أسئلة-مقابلة-تصميم-الأنظمة-مع-الحلول)
-* [أسئلة مقابلة التصميم الكائني الموجه، **مع الحلول**](#أسئلة-مقابلة-التصميم-الكائني-الموجه-مع-الحلول)
-* [أسئلة إضافية لمقابلة تصميم الأنظمة](#أسئلة-إضافية-لمقابلة-تصميم-الأنظمة)
+* [كيفية التعامل مع سؤال مقابلة عمل حول  تصميم الأنظمة](#كيفية-التعامل-مع-سؤال-مقابلة-عمل-حول-تصميم-الأنظمة)
+* [أسئلة مقابلة عمل حول تصميم الأنظمة، **مع الحلول**](#أسئلة-مقابلة-عمل-حول-تصميم-الأنظمة-مع-الحلول)
+* [أسئلة مقابلة عمل حول التصميم الكائني الموجه، **مع الحلول**](#أسئلة-مقابلة-عمل-حول-التصميم-الكائني-الموجه-مع-الحلول)
+* [أسئلة إضافية لمقابلة عمل حول تصميم الأنظمة](#أسئلة-إضافية-لمقابلة-عمل-حول-تصميم-الأنظمة)
+
+</div>
 
 
-## Anki flashcards
+
+## بطاقات تفاعلية
 
 <p align="center">
   <img src="images/zdCAkB3.png">
   <br/>
 </p>
 
-The provided [Anki flashcard decks](https://apps.ankiweb.net/) use spaced repetition to help you retain key system design concepts.
+تستخدم [البطاقات التفاعلية](https://apps.ankiweb.net/) هذه, تقنية [التكرار المتباعد](https://ar.sainte-anastasie.org/articles/cognicin-e-inteligencia/repeticin-espaciada-tcnica-para-memorizar-qu-es-y-cmo-usarla.html) لمساعدتك في تثبيت مفاهيم تصميم النظم الرئيسية.
 
-* [System design deck](https://github.com/donnemartin/system-design-primer/tree/master/resources/flash_cards/System%20Design.apkg)
-* [System design exercises deck](https://github.com/donnemartin/system-design-primer/tree/master/resources/flash_cards/System%20Design%20Exercises.apkg)
-* [Object oriented design exercises deck](https://github.com/donnemartin/system-design-primer/tree/master/resources/flash_cards/OO%20Design.apkg)
+* [مجموعة بطاقات حول تصميم النظم](https://github.com/donnemartin/system-design-primer/tree/master/resources/flash_cards/System%20Design.apkg)
+* [مجموعة بطاقات حول تمارين تصميم النظم](https://github.com/donnemartin/system-design-primer/tree/master/resources/flash_cards/System%20Design%20Exercises.apkg)
+* [مجموعة بطاقات حول تمارين التصميم الكائني الموجه](https://github.com/donnemartin/system-design-primer/tree/master/resources/flash_cards/OO%20Design.apkg)
 
-Great for use while on-the-go.
+ممتازة للاستخدام أثناء التنقل.
+
 
 ### Coding Resource: Interactive Coding Challenges
 
