@@ -26,22 +26,23 @@
 
 هذا هو مشروع مفتوح المصدر ويتم تحديثه باستمرار.
 
-[المساهمات](#contributing) مرحب بها!
+[المساهمات](#مساهمة) مرحب بها!
 
 
-### Prep for the system design interview
+### التحضير لمقابلة تصميم الأنظمة
 
-In addition to coding interviews, system design is a **required component** of the **technical interview process** at many tech companies.
+بالإضافة إلى المقابلات البرمجية، يعتبر تصميم الأنظمة من **المكونات الضرورية** في **عملية المقابلة الفنية** في العديد من شركات التكنولوجيا.
 
-**Practice common system design interview questions** and **compare** your results with **sample solutions**: discussions, code, and diagrams.
+**قم بممارسة الأسئلة الشائعة لمقابلة تصميم الأنظمة** وقارن نتائجك مع **الحلول النموذجية**: مناقشات، كود، ورسوم بيانية.
 
-Additional topics for interview prep:
+المواضيع الإضافية للتحضير للمقابلة:
 
-* [Study guide](#study-guide)
-* [How to approach a system design interview question](#how-to-approach-a-system-design-interview-question)
-* [System design interview questions, **with solutions**](#system-design-interview-questions-with-solutions)
-* [Object-oriented design interview questions, **with solutions**](#object-oriented-design-interview-questions-with-solutions)
-* [Additional system design interview questions](#additional-system-design-interview-questions)
+* [دليل الدراسة](#دليل-الدراسة)
+* [كيفية التعامل مع سؤال مقابلة تصميم الأنظمة](#كيفية-التعامل-مع-سؤال-مقابلة-تصميم-الأنظمة)
+* [أسئلة مقابلة تصميم الأنظمة، **مع الحلول**](#أسئلة-مقابلة-تصميم-الأنظمة-مع-الحلول)
+* [أسئلة مقابلة التصميم الكائني الموجه، **مع الحلول**](#أسئلة-مقابلة-التصميم-الكائني-الموجه-مع-الحلول)
+* [أسئلة إضافية لمقابلة تصميم الأنظمة](#أسئلة-إضافية-لمقابلة-تصميم-الأنظمة)
+
 
 ## Anki flashcards
 
@@ -71,7 +72,7 @@ Check out the sister repo [**Interactive Coding Challenges**](https://github.com
 
 * [Coding deck](https://github.com/donnemartin/interactive-coding-challenges/tree/master/anki_cards/Coding.apkg)
 
-## Contributing
+## مساهمة
 
 > Learn from the community.
 
