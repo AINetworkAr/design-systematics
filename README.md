@@ -453,31 +453,31 @@ AP يعد اختيارًا جيدًا إذا كانت احتياجات العم�
 * [مقدمة بسيطة باللغة الإنجليزية لنظرية CAP](http://ksat.me/a-plain-english-introduction-to-cap-theorem/)
 * [CAP اسئلة شائعة](https://github.com/henryr/cap-faq)
 
-## Consistency patterns
+## أنماط التسلسل
 
-With multiple copies of the same data, we are faced with options on how to synchronize them so clients have a consistent view of the data.  Recall the definition of consistency from the [CAP theorem](#cap-theorem) - Every read receives the most recent write or an error.
+مع وجود عدة نسخ من نفس البيانات، نواجه خيارات حول كيفية مزامنتها حتى يكون للعملاء رؤية ثابتة للبيانات. تذكر تعريف التسلسل من [نظرية CAP](#cap-theorem) - كل قراءة تستلم آخر كتابة أو خطأ.
 
-### Weak consistency
+### التسلسل الضعيف
 
-After a write, reads may or may not see it.  A best effort approach is taken.
+بعد كتابة البيانات، قد تكون القراءات قادرة على رؤيتها أو لا. تُتبع نهج المحاولة الأفضل.
 
-This approach is seen in systems such as memcached.  Weak consistency works well in real time use cases such as VoIP, video chat, and realtime multiplayer games.  For example, if you are on a phone call and lose reception for a few seconds, when you regain connection you do not hear what was spoken during connection loss.
+تُستخدم هذه النهج في أنظمة مثل memcached. يعمل التسلسل الضعيف بشكل جيد في حالات الاستخدام في الوقت الحقيقي مثل VoIP، والمكالمات الفيديو، وألعاب اللاعبين في الوقت الحقيقي. على سبيل المثال، إذا كنت في مكالمة هاتفية وفقدت الإشارة لبضع ثوانٍ، عندما تستعيد الاتصال لن تسمع ما تم قوله أثناء فقدان الاتصال.
 
-### Eventual consistency
+### التسلسل النهائي
 
-After a write, reads will eventually see it (typically within milliseconds).  Data is replicated asynchronously.
+بعد كتابة البيانات، سترى القراءات تلك البيانات في نهاية المطاف (عادة خلال بضع جزيئات زمنية). يتم تكريب البيانات بشكل غير متزامن.
 
-This approach is seen in systems such as DNS and email.  Eventual consistency works well in highly available systems.
+يتم استخدام هذا النهج في أنظمة مثل DNS والبريد الإلكتروني. يعمل التسلسل النهائي بشكل جيد في أنظمة ذات التوفرية العالية.
 
-### Strong consistency
+### التسلسل القوي
 
-After a write, reads will see it.  Data is replicated synchronously.
+بعد كتابة البيانات، سترى القراءات هذه البيانات. يتم تكريب البيانات بشكل متزامن.
 
-This approach is seen in file systems and RDBMSes.  Strong consistency works well in systems that need transactions.
+يتم استخدام هذا النهج في أنظمة ملفات ونظم إدارة قواعد البيانات العلائقية. يعمل التسلسل القوي بشكل جيد في الأنظمة التي تحتاج إلى المعاملات.
 
-### Source(s) and further reading
+### المصادر والقراءة المستقبلية
 
-* [Transactions across data centers](http://snarfed.org/transactions_across_datacenters_io.html)
+* [المعاملات عبر مراكز البيانات](http://snarfed.org/transactions_across_datacenters_io.html)
 
 ## Availability patterns
 
