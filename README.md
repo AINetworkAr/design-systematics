@@ -342,16 +342,16 @@
 
 >**ملاحظة: هذا القسم قيد التطوير**
 
-| سؤال | |
+| الحل | سؤال |
 |---|---|
-| تصميم hash map | [الحل](solutions/object_oriented_design/hash_table/hash_map.ipynb)  |
-| تصميم ذاكرة التخزين المؤقت الأقل استخدامًا مؤخرًا | [الحل](solutions/object_oriented_design/lru_cache/lru_cache.ipynb)  |
-| تصميم مركز اتصال | [الحل](solutions/object_oriented_design/call_center/call_center.ipynb)  |
-| صمم مجموعة من البطاقات | [الحل](solutions/object_oriented_design/deck_of_cards/deck_of_cards.ipynb)  |
-| تصميم موقف للسيارات | [الحل](solutions/object_oriented_design/parking_lot/parking_lot.ipynb)  |
-| صمم خادم دردشة | [الحل](solutions/object_oriented_design/online_chat/online_chat.ipynb)  |
-| تصميم مصفوفة دائرية | [شارك](#contributing)  |
-| أضف سؤال تصميم object-oriented | [شارك](#contributing) |
+| [الحل](solutions/object_oriented_design/hash_table/hash_map.ipynb) | تصميم hash map |
+| [الحل](solutions/object_oriented_design/lru_cache/lru_cache.ipynb) | تصميم ذاكرة التخزين المؤقت الأقل استخدامًا مؤخرًا |
+| [الحل](solutions/object_oriented_design/call_center/call_center.ipynb) | تصميم مركز اتصال |
+| [الحل](solutions/object_oriented_design/deck_of_cards/deck_of_cards.ipynb) | صمم مجموعة من البطاقات |
+| [الحل](solutions/object_oriented_design/parking_lot/parking_lot.ipynb) | تصميم موقف للسيارات |
+| [الحل](solutions/object_oriented_design/online_chat/online_chat.ipynb) | صمم خادم دردشة |
+| [شارك](#contributing) | تصميم مصفوفة دائرية |
+| [شارك](#contributing) | أضف سؤال تصميم object-oriented |
 
 ## مواضيع تصميم الأنظمة:إبدا من هنا
 
