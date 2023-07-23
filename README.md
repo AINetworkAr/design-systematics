@@ -541,17 +541,17 @@ AP يعد اختيارًا جيدًا إذا كانت احتياجات العم�
 * مُبني على الإمكانية
 * مُبني على الجغرافيا
 
-### Disadvantage(s): DNS
+### العيب (العيوب): DNS
 
-* Accessing a DNS server introduces a slight delay, although mitigated by caching described above.
-* DNS server management could be complex and is generally managed by [governments, ISPs, and large companies](http://superuser.com/questions/472695/who-controls-the-dns-servers/472729).
-* DNS services have recently come under [DDoS attack](http://dyn.com/blog/dyn-analysis-summary-of-friday-october-21-attack/), preventing users from accessing websites such as Twitter without knowing Twitter's IP address(es).
+* الوصول إلى خادم DNS يتسبب في تأخير طفيف، على الرغم من التخفيف الذي يتم عبر التخزين المؤقت الوارد أعلاه.
+* إدارة خادم DNS قد تكون معقدة وعادة ما تتم إدارتها من قِبَل [الحكومات ومزودي خدمة الإنترنت والشركات الكبيرة](http://superuser.com/questions/472695/who-controls-the-dns-servers/472729).
+* خدمات DNS تعرضت مؤخرًا لهجمات [DDoS](http://dyn.com/blog/dyn-analysis-summary-of-friday-october-21-attack/)، مما يمنع المستخدمين من الوصول إلى مواقع الويب مثل Twitter دون معرفة عناوين IP الخاصة بها.
 
-### Source(s) and further reading
+### المصدر (المصادر) والقراءة المستقبلية
 
-* [DNS architecture](https://technet.microsoft.com/en-us/library/dd197427(v=ws.10).aspx)
-* [Wikipedia](https://en.wikipedia.org/wiki/Domain_Name_System)
-* [DNS articles](https://support.dnsimple.com/categories/dns/)
+* [هندسة DNS](https://technet.microsoft.com/en-us/library/dd197427(v=ws.10).aspx)
+* [ويكيبيديا](https://en.wikipedia.org/wiki/Domain_Name_System)
+* [مقالات DNS](https://support.dnsimple.com/categories/dns/)
 
 ## Content delivery network
 
