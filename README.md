@@ -479,41 +479,41 @@ AP يعد اختيارًا جيدًا إذا كانت احتياجات العم�
 
 * [المعاملات عبر مراكز البيانات](http://snarfed.org/transactions_across_datacenters_io.html)
 
-## Availability patterns
+## أنماط التوافر
 
-There are two main patterns to support high availability: **fail-over** and **replication**.
+هناك نمطان رئيسيان لدعم التوفر العالي: الفشل الزائد والتكرار.
 
-### Fail-over
+### الفشل الزائد
 
-#### Active-passive
+#### النشط الغير نشط
 
-With active-passive fail-over, heartbeats are sent between the active and the passive server on standby.  If the heartbeat is interrupted, the passive server takes over the active's IP address and resumes service.
+في حالة الفشل الزائد النشط الغير نشط، يتم إرسال نبضات قلب بين الخادم النشط والخادم الغير نشط في الاستعداد. إذا تم قطع نبض القلب، يتولى الخادم الغير نشط عنوان IP النشط ويستأنف الخدمة.
 
-The length of downtime is determined by whether the passive server is already running in 'hot' standby or whether it needs to start up from 'cold' standby.  Only the active server handles traffic.
+يتم تحديد طول التوقف عن العمل عند ما إذا كان الخادم الغير نشط يعمل بالفعل في الاستعداد الساخن أم إذا كان يحتاج للبدء من الاستعداد البارد. يتعامل فقط الخادم النشط مع حركة المرور.
 
-Active-passive failover can also be referred to as master-slave failover.
+يمكن أيضًا الإشارة إلى الفشل الزائد النشط الغير نشط بالفشل الزائد الماستر الرقيق.
 
-#### Active-active
+#### النشط النشط
 
-In active-active, both servers are managing traffic, spreading the load between them.
+في حالة الفشل الزائد النشط النشط، يدير كل من الخوادم حركة المرور ويقوم بتوزيع الحمل بينهما.
 
-If the servers are public-facing, the DNS would need to know about the public IPs of both servers.  If the servers are internal-facing, application logic would need to know about both servers.
+إذا كانت الخوادم تواجه الجمهور، يحتاج نظام DNS إلى معرفة عناوين IP العامة لكل من الخوادم. إذا كانت الخوادم تواجه النظام الداخلي، يحتاج منطق التطبيق إلى معرفة كل من الخوادم.
 
-Active-active failover can also be referred to as master-master failover.
+يمكن أيضًا الإشارة إلى الفشل الزائد النشط النشط بالفشل الزائد الماستر الماستر.
 
-### Disadvantage(s): failover
+### عيوب الفشل الزائد:
 
-* Fail-over adds more hardware and additional complexity.
-* There is a potential for loss of data if the active system fails before any newly written data can be replicated to the passive.
+- يزيد الفشل الزائد من الأجهزة والتعقيد الإضافي.
+- يمكن أن يتسبب في فقدان البيانات إذا فشل النظام النشط قبل أن يتم تكرار أي بيانات مكتوبة حديثًا على النظام الغير نشط.
 
-### Replication
+### التكرار
 
-#### Master-slave and master-master
+#### الماستر الرقيق والماستر الماستر
 
-This topic is further discussed in the [Database](#database) section:
+يتم مناقشة هذا الموضوع بالتفصيل في قسم [قاعدة البيانات](#قاعدة-البيانات):
 
-* [Master-slave replication](#master-slave-replication)
-* [Master-master replication](#master-master-replication)
+- [التكرار الماستر الرقيق](#التكرار-الماستر-الرقيق)
+- [التكرار الماستر الماستر](#التكرار-الماستر-الماستر)
 
 ## Domain name system
 
