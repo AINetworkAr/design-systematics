@@ -515,31 +515,31 @@ AP يعد اختيارًا جيدًا إذا كانت احتياجات العم�
 - [التكرار الماستر الرقيق](#التكرار-الماستر-الرقيق)
 - [التكرار الماستر الماستر](#التكرار-الماستر-الماستر)
 
-## Domain name system
+## نظام اسم المجال (Domain Name System)
 
 <p align="center">
   <img src="http://i.imgur.com/IOyLj4i.jpg">
   <br/>
-  <i><a href=http://www.slideshare.net/srikrupa5/dns-security-presentation-issa>Source: DNS security presentation</a></i>
+  <i><a href=http://www.slideshare.net/srikrupa5/dns-security-presentation-issa>المصدر: عرض أمان نظام اسم المجال (DNS)</a></i>
 </p>
 
-A Domain Name System (DNS) translates a domain name such as www.example.com to an IP address.
+يقوم نظام اسم المجال (DNS) بترجمة اسم المجال مثل www.example.com إلى عنوان IP.
 
-DNS is hierarchical, with a few authoritative servers at the top level.  Your router or ISP provides information about which DNS server(s) to contact when doing a lookup.  Lower level DNS servers cache mappings, which could become stale due to DNS propagation delays.  DNS results can also be cached by your browser or OS for a certain period of time, determined by the [time to live (TTL)](https://en.wikipedia.org/wiki/Time_to_live).
+يعتبر DNS هرميًا، حيث يحتوي على عدد قليل من الخوادم الأساسية على المستوى العلوي. يقدم جهاز التوجيه الخاص بك أو مزود خدمة الإنترنت معلومات حول الخادم(ات) DNS الذي يجب الاتصال به عند البحث. تحتوي خوادم DNS على مختصرات للتخزين المؤقت للتحويلات، والتي يمكن أن تصبح غير صحيحة بسبب تأخيرات انتشار DNS. يمكن أن تحتوي نتائج DNS أيضًا على تخزين مؤقت من قبل المستعرض أو نظام التشغيل الخاص بك لفترة زمنية معينة تُحدد بواسطة [وقت العيش (TTL)](https://en.wikipedia.org/wiki/Time_to_live).
 
-* **NS record (name server)** - Specifies the DNS servers for your domain/subdomain.
-* **MX record (mail exchange)** - Specifies the mail servers for accepting messages.
-* **A record (address)** - Points a name to an IP address.
-* **CNAME (canonical)** - Points a name to another name or `CNAME` (example.com to www.example.com) or to an `A` record.
+* **سجل NS (خادم الاسم)** - يحدد خوادم DNS لنطاقك الرئيسي/الفرعي.
+* **سجل MX (تبادل البريد)** - يحدد خوادم البريد لقبول الرسائل.
+* **سجل A (عنوان)** - يعيد اسمًا إلى عنوان IP.
+* **سجل CNAME (القيمة القياسية)** - يعيد اسمًا إلى اسم آخر أو سجل `CNAME` (مثال.com إلى www.مثال.com) أو إلى سجل `A`.
 
-Services such as [CloudFlare](https://www.cloudflare.com/dns/) and [Route 53](https://aws.amazon.com/route53/) provide managed DNS services.  Some DNS services can route traffic through various methods:
+تقدم خدمات مثل [كلاود فلير](https://www.cloudflare.com/dns/) و [Route 53](https://aws.amazon.com/route53/) خدمات DNS المُدارة. يمكن لبعض خدمات DNS توجيه حركة المرور عبر طرق مختلفة:
 
 * [Weighted round robin](http://g33kinfo.com/info/archives/2657)
-    * Prevent traffic from going to servers under maintenance
-    * Balance between varying cluster sizes
-    * A/B testing
-* Latency-based
-* Geolocation-based
+    * منع حركة المرور من الذهاب إلى الخوادم قيد التنفيذ الصيانة
+    * توازن بين أحجام المجموعة المتغيرة
+    * اختبار A/B
+* مُبني على الإمكانية
+* مُبني على الجغرافيا
 
 ### Disadvantage(s): DNS
 
