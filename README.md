@@ -837,51 +837,51 @@ AP يعد اختيارًا جيدًا إذا كانت احتياجات العم�
 
 * [القابلية للتوسع حتى أول 10 مليون مستخدم](https://www.youtube.com/watch?v=w95murBkYmU)
 
-#### Sharding
+#### التجزئة (Sharding)
 
 <p align="center">
   <img src="http://i.imgur.com/wU8x5Id.png">
   <br/>
-  <i><a href=http://www.slideshare.net/jboner/scalability-availability-stability-patterns/>Source: Scalability, availability, stability, patterns</a></i>
+  <i><a href=http://www.slideshare.net/jboner/scalability-availability-stability-patterns/>المصدر: القابلية للتوسع، الاستقرار، الثبات</a></i>
 </p>
 
-Sharding distributes data across different databases such that each database can only manage a subset of the data.  Taking a users database as an example, as the number of users increases, more shards are added to the cluster.
+تقوم التجزئة بتوزيع البيانات عبر قواعد بيانات مختلفة بحيث يمكن لكل قاعدة بيانات إدارة مجموعة فرعية من البيانات فقط. عندما يزداد عدد المستخدمين، يتم إضافة مزيد من الشرائح (Shards) إلى المجموعة.
 
-Similar to the advantages of [federation](#federation), sharding results in less read and write traffic, less replication, and more cache hits.  Index size is also reduced, which generally improves performance with faster queries.  If one shard goes down, the other shards are still operational, although you'll want to add some form of replication to avoid data loss.  Like federation, there is no single central master serializing writes, allowing you to write in parallel with increased throughput.
+على غرار مزايا [التوحيد (Federation)](#التوحيد-federation)، تؤدي التجزئة إلى تقليل حركة القراءة والكتابة، والتكرار، وتزيد من نجاحات التخزين المؤقت (الكاش). يتم أيضًا تقليل حجم الفهرس، مما يحسن عمليات الاستعلام بشكل عام بتسريعها. إذا توقفت إحدى الشرائح، فإن الشرائح الأخرى مازالت تعمل بشكل طبيعي، على الرغم من أنك سترغب في إضافة بعض نمط التكرار (التكرار الزائد) لتجنب فقدان البيانات. مثل التوحيد (Federation)، لا يوجد ماستر مركزي واحد يقوم بتسلسل الكتابات، مما يسمح لك بالكتابة بشكل متوازٍ مع زيادة الإنتاجية.
 
-Common ways to shard a table of users is either through the user's last name initial or the user's geographic location.
+الطرق المشتركة لتجزئة جدول المستخدمين هي إما استخدام الحرف الأول من اسم العائلة للمستخدم أو موقعه الجغرافي.
 
-##### Disadvantage(s): sharding
+##### سلبية(s): التجزئة (Sharding)
 
-* You'll need to update your application logic to work with shards, which could result in complex SQL queries.
-* Data distribution can become lopsided in a shard.  For example, a set of power users on a shard could result in increased load to that shard compared to others.
-    * Rebalancing adds additional complexity.  A sharding function based on [consistent hashing](http://www.paperplanes.de/2011/12/9/the-magic-of-consistent-hashing.html) can reduce the amount of transferred data.
-* Joining data from multiple shards is more complex.
-* Sharding adds more hardware and additional complexity.
+* ستحتاج إلى تحديث منطق التطبيق الخاص بك للعمل مع الشرائح، مما قد يؤدي إلى استعلامات SQL معقدة.
+* يمكن أن يصبح توزيع البيانات غير متوازنٍ في الشريحة. على سبيل المثال، مجموعة من المستخدمين ذوي الاستخدام المتكرر على شريحة قد يؤدي إلى زيادة العبء على تلك الشريحة مقارنةً بالأخرى.
+    * التوازن يضيف تعقيدًا إضافيًا. يمكن أن يقلل الاعتماد على نمط التجزئة الذي يستند إلى تجزئة ثابتة ([consistent hashing](http://www.paperplanes.de/2011/12/9/the-magic-of-consistent-hashing.html)) من كمية البيانات المنقولة.
+* التحاق البيانات من عدة شرائح يتطلب تعقيدًا أكثر.
+* التجزئة تضيف المزيد من الأجهزة والتعقيدات الإضافية.
 
-##### Source(s) and further reading: sharding
+##### المصادر وقراءة إضافية: التجزئة
 
-* [The coming of the shard](http://highscalability.com/blog/2009/8/6/an-unorthodox-approach-to-database-design-the-coming-of-the.html)
-* [Shard database architecture](https://en.wikipedia.org/wiki/Shard_(database_architecture))
-* [Consistent hashing](http://www.paperplanes.de/2011/12/9/the-magic-of-consistent-hashing.html)
+* [القادم للتصدر (The coming of the shard)](http://highscalability.com/blog/2009/8/6/an-unorthodox-approach-to-database-design-the-coming-of-the.html)
+* [هندسة معمارية قاعدة البيانات بنمط التجزئة (Shard database architecture)](https://en.wikipedia.org/wiki/Shard_(database_architecture))
+* [التجزئة الثابتة (Consistent hashing)](http://www.paperplanes.de/2011/12/9/the-magic-of-consistent-hashing.html)
 
-#### Denormalization
+#### التجاوز عن التطابق الاعتيادي (Denormalization)
 
-Denormalization attempts to improve read performance at the expense of some write performance.  Redundant copies of the data are written in multiple tables to avoid expensive joins.  Some RDBMS such as [PostgreSQL](https://en.wikipedia.org/wiki/PostgreSQL) and Oracle support [materialized views](https://en.wikipedia.org/wiki/Materialized_view) which handle the work of storing redundant information and keeping redundant copies consistent.
+يهدف التجاوز عن التطابق الاعتيادي إلى تحسين أداء القراءة على حساب أداء الكتابة بعض الشيء. يتم كتابة نسخ مكررة من البيانات في جداول متعددة لتجنب الانضمامات المكلفة. تدعم بعض أنظمة إدارة قواعد البيانات العلائقية مثل [PostgreSQL](https://en.wikipedia.org/wiki/PostgreSQL) و Oracle [مشاهد مادية](https://en.wikipedia.org/wiki/Materialized_view) التي تتولى عمل تخزين المعلومات المكررة والحفاظ على نسخ مكررة متسقة.
 
-Once data becomes distributed with techniques such as [federation](#federation) and [sharding](#sharding), managing joins across data centers further increases complexity.  Denormalization might circumvent the need for such complex joins.
+عندما يصبح البيانات منتشرة باستخدام تقنيات مثل [التوحيد (Federation)](#التوحيد-federation) و [التجزئة (Sharding)](#التجزئة-sharding)، يزيد التحكم في الانضمامات عبر مراكز البيانات من التعقيد. يمكن أن يتجاوز التجاوز عن التطابق الاعتيادي الحاجة إلى الانضمامات المعقدة مثل هذه.
 
-In most systems, reads can heavily outnumber writes 100:1 or even 1000:1.  A read resulting in a complex database join can be very expensive, spending a significant amount of time on disk operations.
+في معظم الأنظمة، تتجاوز القراءات بشكل كبير عدد الكتابات بمعدل 100:1 أو حتى 1000:1. يمكن أن تكون القراءة التي تؤدي إلى انضمام معقد لقاعدة البيانات مكلفة جدًا، حيث تستغرق مبالغ كبيرة من الوقت في عمليات القرص.
 
-##### Disadvantage(s): denormalization
+##### سلبية(s): التجاوز عن التطابق الاعتيادي (Denormalization)
 
-* Data is duplicated.
-* Constraints can help redundant copies of information stay in sync, which increases complexity of the database design.
-* A denormalized database under heavy write load might perform worse than its normalized counterpart.
+* تتم تكرار البيانات.
+* يمكن أن تساعد القيود على الحفاظ على نسخ مكررة من المعلومات في التزامن، مما يزيد من تعقيد تصميم قاعدة البيانات.
+* قد يكون أداء قاعدة البيانات المجاوزة للتطابق الاعتيادي أسوأ من نظيرتها المعتادة تحت أحمال الكتابة الشديدة.
 
-###### Source(s) and further reading: denormalization
+###### المصادر وقراءة إضافية: التجاوز عن التطابق الاعتيادي (Denormalization)
 
-* [Denormalization](https://en.wikipedia.org/wiki/Denormalization)
+* [التجاوز عن التطابق الاعتيادي (Denormalization)](https://en.wikipedia.org/wiki/Denormalization)
 
 #### SQL tuning
 
