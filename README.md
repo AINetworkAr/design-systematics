@@ -671,48 +671,48 @@ AP يعد اختيارًا جيدًا إذا كانت احتياجات العم�
 * [توازن حمولة الطبقة 7](https://www.nginx.com/resources/glossary/layer-7-load-balancing/)
 * [تكوين مستمع ELB](http://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-listener-config.html)
 
-## Reverse proxy (web server)
+## البروكسي العكسي (خادم الويب)
 
 <p align="center">
   <img src="http://i.imgur.com/n41Azff.png">
   <br/>
-  <i><a href=https://upload.wikimedia.org/wikipedia/commons/6/67/Reverse_proxy_h2g2bob.svg>Source: Wikipedia</a></i>
+  <i><a href=https://upload.wikimedia.org/wikipedia/commons/6/67/Reverse_proxy_h2g2bob.svg>المصدر: ويكيبيديا</a></i>
   <br/>
 </p>
 
-A reverse proxy is a web server that centralizes internal services and provides unified interfaces to the public.  Requests from clients are forwarded to a server that can fulfill it before the reverse proxy returns the server's response to the client.
+البروكسي العكسي هو خادم ويب يُركِّز الخدمات الداخلية ويوفر واجهات موحدة للجمهور. يتم تحويل طلبات العملاء إلى خادم يمكنه تنفيذها قبل أن يعيد البروكسي العكسي استجابة الخادم إلى العميل.
 
-Additional benefits include:
+الفوائد الإضافية تشمل:
 
-* **Increased security** - Hide information about backend servers, blacklist IPs, limit number of connections per client
-* **Increased scalability and flexibility** - Clients only see the reverse proxy's IP, allowing you to scale servers or change their configuration
-* **SSL termination** - Decrypt incoming requests and encrypt server responses so backend servers do not have to perform these potentially expensive operations
-    * Removes the need to install [X.509 certificates](https://en.wikipedia.org/wiki/X.509) on each server
-* **Compression** - Compress server responses
-* **Caching** - Return the response for cached requests
-* **Static content** - Serve static content directly
+* **زيادة الأمان** - إخفاء معلومات الخوادم الخلفية، وإضافة عناوين IP إلى القائمة السوداء، وتحديد الحد الأقصى لعدد الاتصالات لكل عميل.
+* **زيادة القابلية للتوسع والمرونة** - يرى العملاء فقط عنوان IP للبروكسي العكسي، مما يتيح لك توسيع الخوادم أو تغيير تكوينها.
+* **إنهاء SSL** - فك تشفير الطلبات الواردة وتشفير استجابات الخادم بحيث لا يتعين على خوادم النظام الخلفية إجراء هذه العمليات المكلفة بالطاقة
+    * يزيل الحاجة إلى تثبيت شهادات X.509 على كل خادم
+* **الضغط** - ضغط استجابات الخادم
+* **التخزين المؤقت** - إعادة الاستجابة للطلبات المخزنة مسبقًا
+* **المحتوى الثابت** - تقديم المحتوى الثابت مباشرة
     * HTML/CSS/JS
-    * Photos
-    * Videos
-    * Etc
+    * الصور
+    * مقاطع الفيديو
+    * وغيرها
 
-### Load balancer vs reverse proxy
+### الموازنة الحمل (Load Balancer) مقابل البروكسي العكسي
 
-* Deploying a load balancer is useful when you have multiple servers.  Often, load balancers  route traffic to a set of servers serving the same function.
-* Reverse proxies can be useful even with just one web server or application server, opening up the benefits described in the previous section.
-* Solutions such as NGINX and HAProxy can support both layer 7 reverse proxying and load balancing.
+* إن نشر موازنة الحمل مفيد عندما يكون لديك خوادم متعددة. في كثير من الأحيان، تقوم موازنات الحمل بتوجيه حركة المرور إلى مجموعة من الخوادم التي تقدم نفس الوظيفة.
+* يمكن أن يكون البروكسي العكسي مفيدًا حتى مع خادم واحد فقط أو خادم التطبيق واحد، مما يفتح الفوائد المذكورة في القسم السابق.
+* يمكن أن تدعم حلول مثل NGINX و HAProxy كل من توجيه البروكسي العكسي في الطبقة 7 وموازنة الحمل.
 
-### Disadvantage(s): reverse proxy
+### سلبية(s): البروكسي العكسي
 
-* Introducing a reverse proxy results in increased complexity.
-* A single reverse proxy is a single point of failure, configuring multiple reverse proxies (ie a [failover](https://en.wikipedia.org/wiki/Failover)) further increases complexity.
+* يتسبب إدخال البروكسي العكسي في زيادة التعقيد.
+* يعتبر البروكسي العكسي الفردي نقطة فشل واحدة، ويزيد تكوين عدة بروكسيات عكسية (أي [التبديل التلقائي](https://en.wikipedia.org/wiki/Failover)) من زيادة التعقيد بشكل أكبر.
 
-### Source(s) and further reading
+### المصادر وقراءة إضافية
 
-* [Reverse proxy vs load balancer](https://www.nginx.com/resources/glossary/reverse-proxy-vs-load-balancer/)
-* [NGINX architecture](https://www.nginx.com/blog/inside-nginx-how-we-designed-for-performance-scale/)
-* [HAProxy architecture guide](http://www.haproxy.org/download/1.2/doc/architecture.txt)
-* [Wikipedia](https://en.wikipedia.org/wiki/Reverse_proxy)
+* [البروكسي العكسي مقابل موازنة الحمل](https://www.nginx.com/resources/glossary/reverse-proxy-vs-load-balancer/)
+* [هندسة NGINX](https://www.nginx.com/blog/inside-nginx-how-we-designed-for-performance-scale/)
+* [دليل هندسة HAProxy](http://www.haproxy.org/download/1.2/doc/architecture.txt)
+* [ويكيبيديا](https://en.wikipedia.org/wiki/Reverse_proxy)
 
 ## Application layer
 
