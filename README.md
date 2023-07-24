@@ -714,40 +714,42 @@ AP يعد اختيارًا جيدًا إذا كانت احتياجات العم�
 * [دليل هندسة HAProxy](http://www.haproxy.org/download/1.2/doc/architecture.txt)
 * [ويكيبيديا](https://en.wikipedia.org/wiki/Reverse_proxy)
 
-## Application layer
+## طبقة التطبيق
 
 <p align="center">
   <img src="http://i.imgur.com/yB5SYwm.png">
   <br/>
-  <i><a href=http://lethain.com/introduction-to-architecting-systems-for-scale/#platform_layer>Source: Intro to architecting systems for scale</a></i>
+  <i><a href=http://lethain.com/introduction-to-architecting-systems-for-scale/#platform_layer>المصدر: مقدمة لهندسة الأنظمة للتوسع</a></i>
 </p>
 
-Separating out the web layer from the application layer (also known as platform layer) allows you to scale and configure both layers independently.  Adding a new API results in adding application servers without necessarily adding additional web servers.  The **single responsibility principle** advocates for small and autonomous services that work together.  Small teams with small services can plan more aggressively for rapid growth.
+تفصيل طبقة الويب عن طبقة التطبيق (المعروفة أيضًا بطبقة البنية) يُتيح لك توسيع وتكوين كلا الطبقتين بشكل مستقل. إضافة واجهة برمجة التطبيق الجديدة يؤدي إلى إضافة خوادم التطبيق دون ضرورة إضافة خوادم الويب الإضافية. يدعم "مبدأ المسئولية الفردية" الخدمات الصغيرة والمستقلة التي تعمل معًا. يمكن للفرق الصغيرة التي تعتمد على الخدمات الصغيرة التخطيط للنمو السريع بشكل أكثر جرأة.
 
-Workers in the application layer also help enable [asynchronism](#asynchronism).
+العمال في طبقة التطبيق يساعدون أيضًا على تمكين [الأزمنة](#الأزمنة).
 
-### Microservices
+### الخدمات الصغيرة (Microservices)
 
-Related to this discussion are [microservices](https://en.wikipedia.org/wiki/Microservices), which can be described as a suite of independently deployable, small, modular services.  Each service runs a unique process and communicates through a well-defined, lightweight mechanism to serve a business goal. <sup><a href=https://smartbear.com/learn/api-design/what-are-microservices>1</a></sup>
+يتصل الخدمات الصغيرة المتعلقة بهذا النقاش بـ [الخدمات الصغيرة](https://en.wikipedia.org/wiki/Microservices)، والتي يمكن وصفها بأنها مجموعة من الخدمات الصغيرة والقابلة للنشر بشكل مستقل. كل خدمة تدير عملية فريدة وتتواصل من خلال آلية خفيفة ومحددة بوضوح لخدمة هدف تجاري. <sup><a href=https://smartbear.com/learn/api-design/what-are-microservices>1</a></sup>
 
-Pinterest, for example, could have the following microservices: user profile, follower, feed, search, photo upload, etc.
+على سبيل المثال، يمكن أن تحتوي بينتيرست على الخدمات الصغيرة التالية: ملف المستخدم، المتابع، الخلاصة، البحث، تحميل الصور، وغيرها.
 
-### Service Discovery
+### اكتشاف الخدمة (Service Discovery)
 
-Systems such as [Consul](https://www.consul.io/docs/index.html), [Etcd](https://coreos.com/etcd/docs/latest), and [Zookeeper](http://www.slideshare.net/sauravhaloi/introduction-to-apache-zookeeper) can help services find each other by keeping track of registered names, addresses, and ports.  [Health checks](https://www.consul.io/intro/getting-started/checks.html) help verify service integrity and are often done using an [HTTP](#hypertext-transfer-protocol-http) endpoint.  Both Consul and Etcd have a built in [key-value store](#key-value-store) that can be useful for storing config values and other shared data.
+يمكن أن تساعد النظم مثل [Consul](https://www.consul.io/docs/index.html)، [Etcd](https://coreos.com/etcd/docs/latest)، و [Zookeeper](http://www.slideshare.net/sauravhaloi/introduction-to-apache-zookeeper) الخدمات على العثور على بعضها البعض عن طريق تتبع الأسماء والعناوين والمنافذ المُسجَّلة. تساعد [فحوصات الصحة](https://www.consul.io/intro/getting-started/checks.html) في التحقق من سلامة الخدمة ويتم ذلك غالبًا باستخدام [نقطة النهاية HTTP](#بروتوكول-نقل-النصوص-http). يحتوي كلا من Consul و Etcd على [مخزن القيمة المفتاحية](#مخزن-القيمة-المفتاحية) المدمج الذي يمكن أن يكون مفيدًا لتخزين قيم التكوين والبيانات المشتركة الأخرى.
 
-### Disadvantage(s): application layer
+### سلبية(s): طبقة التطبيق
 
-* Adding an application layer with loosely coupled services requires a different approach from an architectural, operations, and process viewpoint (vs a monolithic system).
-* Microservices can add complexity in terms of deployments and operations.
+* يتطلب إضافة طبقة التطبيق بخدمات مرتبطة بضمان مختلف من منظور المعمار والعمليات والعملية (مقارنة بنظام أحادي القطعة).
+* يمكن أن تضيف الخدمات الصغيرة تعقيدًا من حيث عمليات النشر والت
 
-### Source(s) and further reading
+شغيل.
 
-* [Intro to architecting systems for scale](http://lethain.com/introduction-to-architecting-systems-for-scale)
-* [Crack the system design interview](http://www.puncsky.com/blog/2016/02/14/crack-the-system-design-interview/)
-* [Service oriented architecture](https://en.wikipedia.org/wiki/Service-oriented_architecture)
-* [Introduction to Zookeeper](http://www.slideshare.net/sauravhaloi/introduction-to-apache-zookeeper)
-* [Here's what you need to know about building microservices](https://cloudncode.wordpress.com/2016/07/22/msa-getting-started/)
+### المصادر وقراءة إضافية
+
+* [مقدمة لهندسة الأنظمة للتوسع](http://lethain.com/introduction-to-architecting-systems-for-scale)
+* [كيفية اجتياز مقابلة تصميم الأنظمة](http://www.puncsky.com/blog/2016/02/14/crack-the-system-design-interview/)
+* [هندسة النظام الموجه الخدمات](https://en.wikipedia.org/wiki/Service-oriented_architecture)
+* [مقدمة لـ زووكيبر](http://www.slideshare.net/sauravhaloi/introduction-to-apache-zookeeper)
+* [ما تحتاج إلى معرفته حول بناء الخدمات الصغيرة](https://cloudncode.wordpress.com/2016/07/22/msa-getting-started/)
 
 ## Database
 
