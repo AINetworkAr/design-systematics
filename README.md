@@ -782,39 +782,39 @@ AP يعد اختيارًا جيدًا إذا كانت احتياجات العم�
   <i><a href=http://www.slideshare.net/jboner/scalability-availability-stability-patterns/>المصدر: نمط القابلية للتوسع والتوافر والاستقرار</a></i>
 </p>
 
-##### سلبية(s): تكرار الماستر-السلايف (Master-Slave Replication)
+##### السلبيات: تكرار الماستر-السلايف (Master-Slave Replication)
 
 * يُحتاج إلى منطق إضافي لترقية السلايف ليصبح ماستر.
-* انظر [سلبية(s): التكرار (Replication)](#سلبيةs-التكرار-replication) للنقاط المتعلقة بكل من تكرار الماستر-السلايف وتكرار الماستر-الماستر.
-#### Master-master replication
+* انظر [سلبيات: التكرار (Replication)](#سلبيات-التكرار-replication) للنقاط المتعلقة بكل من تكرار الماستر-السلايف وتكرار الماستر-الماستر.
+#### تكرار الماستر-الماستر (Master-Master Replication)
 
-Both masters serve reads and writes and coordinate with each other on writes.  If either master goes down, the system can continue to operate with both reads and writes.
+يُخدِّم كل من الماسترين القراءات والكتابات ويتنسقان مع بعضهما فيما يتعلق بالكتابات. إذا خرج أي من الماسترين عن الخدمة، يمكن للنظام أن يستمر في العمل مع القراءات والكتابات من كلا الماسترين.
 
 <p align="center">
   <img src="http://i.imgur.com/krAHLGg.png">
   <br/>
-  <i><a href=http://www.slideshare.net/jboner/scalability-availability-stability-patterns/>Source: Scalability, availability, stability, patterns</a></i>
+  <i><a href=http://www.slideshare.net/jboner/scalability-availability-stability-patterns/>المصدر: نمط القابلية للتوسع والتوافر والاستقرار</a></i>
 </p>
 
-##### Disadvantage(s): master-master replication
+##### سلبية(s): تكرار الماستر-الماستر (Master-Master Replication)
 
-* You'll need a load balancer or you'll need to make changes to your application logic to determine where to write.
-* Most master-master systems are either loosely consistent (violating ACID) or have increased write latency due to synchronization.
-* Conflict resolution comes more into play as more write nodes are added and as latency increases.
-* See [Disadvantage(s): replication](#disadvantages-replication) for points related to **both** master-slave and master-master.
+* ستحتاج إلى جهاز توزيع الحمل (Load Balancer) أو ستحتاج إلى إجراء تغييرات على منطق تطبيقك لتحديد مكان الكتابة.
+* يتميز معظم أنظمة الماستر-الماستر إما بالاستقراء الضعيف (مُخالفة لـ ACID) أو بارتفاع تأخير الكتابة بسبب المزامنة.
+* تزداد مشكلة تحليل التضارب عندما يتم إضافة مزيد من عقد الكتابة وعندما يزداد التأخير.
+* انظر [سلبية(s): التكرار (Replication)](#سلبيةs-التكرار-replication) للنقاط المتعلقة بكل من تكرار الماستر-السلايف وتكرار الماستر-الماستر.
 
-##### Disadvantage(s): replication
+##### سلبية(s): التكرار (Replication)
 
-* There is a potential for loss of data if the master fails before any newly written data can be replicated to other nodes.
-* Writes are replayed to the read replicas.  If there are a lot of writes, the read replicas can get bogged down with replaying writes and can't do as many reads.
-* The more read slaves, the more you have to replicate, which leads to greater replication lag.
-* On some systems, writing to the master can spawn multiple threads to write in parallel, whereas read replicas only support writing sequentially with a single thread.
-* Replication adds more hardware and additional complexity.
+* يوجد احتمالية فقدان البيانات إذا فشل الماستر قبل أن يتم نسخ البيانات الجديدة التي تمت كتابتها على عقدات أخرى.
+* يتم إعادة تشغيل الكتابات على النُّسخ القرائية. إذا كان هناك الكثير من الكتابات، فإن النُّسخ القرائية يمكن أن تصبح ثقيلة مع إعادة تشغيل الكتابات ولن تتمكن من إجراء القراءات بكمية كبيرة.
+* كلما زادت عدد النُّسخ القرائية، زاد عدد العقد التي يتعين عليك تكرارها، مما يؤدي إلى زيادة تأخير التكرار.
+* في بعض الأنظمة، يمكن أن تؤدي الكتابة إلى الماستر إلى إنشاء عدة مواضيع للكتابة بشكل متوازٍ، بينما تدعم النُّسخ القرائية فقط الكتابة بتسلسل مع موضوع واحد.
+* يُضيف التكرار المزيد من الأجهزة والتعقيدات الإضافية.
 
-##### Source(s) and further reading: replication
+##### المصادر وقراءة إضافية: التكرار
 
-* [Scalability, availability, stability, patterns](http://www.slideshare.net/jboner/scalability-availability-stability-patterns/)
-* [Multi-master replication](https://en.wikipedia.org/wiki/Multi-master_replication)
+* [نمط القابلية للتوسع والتوافر والاستقرار](http://www.slideshare.net/jboner/scalability-availability-stability-patterns/)
+* [تكرار الماستر-الماستر (Multi-master replication)](https://en.wikipedia.org/wiki/Multi-master_replication)
 
 #### Federation
 
