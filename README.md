@@ -597,75 +597,79 @@ AP يعد اختيارًا جيدًا إذا كانت احتياجات العم�
 * [ويكيبيديا](https://en.wikipedia.org/wiki/Content_delivery_network)
 
 
-## Load balancer
+## موازنة الحمولة (Load Balancer)
 
 <p align="center">
   <img src="http://i.imgur.com/h81n9iK.png">
   <br/>
-  <i><a href=http://horicky.blogspot.com/2010/10/scalable-system-design-patterns.html>Source: Scalable system design patterns</a></i>
+  <i><a href=http://horicky.blogspot.com/2010/10/scalable-system-design-patterns.html>المصدر: أنماط تصميم الأنظمة القابلة للتوسع</a></i>
 </p>
 
-Load balancers distribute incoming client requests to computing resources such as application servers and databases.  In each case, the load balancer returns the response from the computing resource to the appropriate client.  Load balancers are effective at:
+موازنة الحمولة (Load Balancer) هي نظام يقوم بتوزيع طلبات العملاء الواردة على مصادر الحوسبة مثل خوادم التطبيقات وقواعد البيانات. في كل حالة، تعيد موازنة الحمولة الاستجابة من مصدر الحوسبة المناسب إلى العميل المناسب. تكون موازنات الحمولة فعّالة في:
 
-* Preventing requests from going to unhealthy servers
-* Preventing overloading resources
-* Helping eliminate single points of failure
+* منع الطلبات من الذهاب إلى خوادم غير صحيحة.
+* منع تحميل المصادر بشكل زائد.
+* المساعدة في القضاء على نقاط الفشل الفردية.
 
-Load balancers can be implemented with hardware (expensive) or with software such as HAProxy.
+يمكن تنفيذ موازنات الحمولة بواسطة أجهزة (تكلفة عالية) أو ببرمجيات مثل HAProxy.
 
-Additional benefits include:
+الفوائد الإضافية تشمل:
 
-* **SSL termination** - Decrypt incoming requests and encrypt server responses so backend servers do not have to perform these potentially expensive operations
-    * Removes the need to install [X.509 certificates](https://en.wikipedia.org/wiki/X.509) on each server
-* **Session persistence** - Issue cookies and route a specific client's requests to same instance if the web apps do not keep track of sessions
+* **إنهاء SSL** - فك تشفير الطلبات الواردة وتشفير استجابات الخادم بحيث لا يتعين على خوادم النظام الخلفية إجراء هذه العمليات المكلفة بالطاقة
+    * يزيل الحاجة إلى تثبيت شهادات X.509 على كل خادم
+* **استمرارية الجلسة** - إصدار ملفات تعريف الارتباط وتوجيه طلبات العميل المحددة إلى نفس النسخة إذا لم تتتبع تطبيقات الويب الجلسات
 
-To protect against failures, it's common to set up multiple load balancers, either in [active-passive](#active-passive) or [active-active](#active-active) mode.
+لحماية النظام من الفشل، من المشترك إعداد عدة موازنات حمولة، سواء في الوضع النشط السلبي أو النشط النشط.
 
-Load balancers can route traffic based on various metrics, including:
+يمكن لموازنات الحمولة توجيه حركة المرور بناءً على مقاييس مختلفة، بما في ذلك:
 
-* Random
-* Least loaded
-* Session/cookies
-* [Round robin or weighted round robin](http://g33kinfo.com/info/archives/2657)
-* [Layer 4](#layer-4-load-balancing)
-* [Layer 7](#layer-7-load-balancing)
+* عشوائي
+* الأقل تحميلًا
+* الجلسات/الكوكيز
+* [التوزيع التسلسلي أو التوزيع التسلسلي المزوَّد بأوزان](http://g33kinfo.com/info/archives/2657)
+* [الطبقة 4](#توازن-حمولة-الطبقة-4)
+* [الطبقة 7](#توازن-حمولة-الطبقة-7)
 
-### Layer 4 load balancing
+### توازن حمولة الطبقة 4
 
-Layer 4 load balancers look at info at the [transport layer](#communication) to decide how to distribute requests.  Generally, this involves the source, destination IP addresses, and ports in the header, but not the contents of the packet.  Layer 4 load balancers forward network packets to and from the upstream server, performing [Network Address Translation (NAT)](https://www.nginx.com/resources/glossary/layer-4-load-balancing/).
+تتطلع موازنات حمولة الطبقة 4 إلى المعلومات في [الطبقة النقلية](#الاتصال) لتحديد كيفية توزيع الطلبات. يتضمن ذلك عادة المصدر وعناوين IP الوجهة والمنافذ في الهيدر، ولكن ليس محتويات الحزمة. تقوم موازنات حمولة الطبقة 4 بتوج
 
-### Layer 7 load balancing
+يه حزم الشبكة إلى الخادم الرئيسي والخادم العلوي، مع أداء [ترجمة عنوان الشبكة (NAT)](https://www.nginx.com/resources/glossary/layer-4-load-balancing/).
 
-Layer 7 load balancers look at the [application layer](#communication) to decide how to distribute requests.  This can involve contents of the header, message, and cookies.  Layer 7 load balancers terminates network traffic, reads the message, makes a load-balancing decision, then opens a connection to the selected server.  For example, a layer 7 load balancer can direct video traffic to servers that host videos while directing more sensitive user billing traffic to security-hardened servers.
+### توازن حمولة الطبقة 7
 
-At the cost of flexibility, layer 4 load balancing requires less time and computing resources than Layer 7, although the performance impact can be minimal on modern commodity hardware.
+تنظر موازنات حمولة الطبقة 7 في [الطبقة التطبيقية](#الاتصال) لتحديد كيفية توزيع الطلبات. يمكن أن يتضمن ذلك محتويات الهيدر والرسالة والكوكيز. ينهي موازنات حمولة الطبقة 7 حركة المرور الشبكية، وتقرأ الرسالة، وتتخذ قرارًا بتوزيع الحمولة، ثم تفتح اتصالًا بالخادم المحدد. على سبيل المثال، يمكن لموازن حمولة الطبقة 7 توجيه حركة الفيديو إلى الخوادم التي تستضيف الفيديوهات بينما يتم توجيه حركة التسوية الأكثر حساسية لمستخدمي الفوتر المحمية أمانًا إلى الخوادم.
 
-### Horizontal scaling
+على حساب المرونة، يتطلب توازن حمولة الطبقة 4 وقتًا وموارد حساب أقل من الطبقة 7، على الرغم من أن التأثير على الأداء يمكن أن يكون ضئيلًا على الأجهزة القابلة للتداول الحديثة.
 
-Load balancers can also help with horizontal scaling, improving performance and availability.  Scaling out using commodity machines is more cost efficient and results in higher availability than scaling up a single server on more expensive hardware, called **Vertical Scaling**.  It is also easier to hire for talent working on commodity hardware than it is for specialized enterprise systems.
+### التوسع الأفقي
 
-#### Disadvantage(s): horizontal scaling
+يمكن لموازنات الحمولة أن تساعد أيضًا في التوسع الأفقي، وتحسين الأداء والتوافر. يعد التوسع الأفقي باستخدام أجهزة معيارية أكثر كفاءة من التوسع العمودي لخادم واحد على أجهزة أكثر تكلفة، والذي يُسمى التوسع الرأسي. من السهل أيضًا توظيف المواهب العاملة على أجهزة معيارية بدلاً من أنظمة المؤسسات المتخصصة.
 
-* Scaling horizontally introduces complexity and involves cloning servers
-    * Servers should be stateless: they should not contain any user-related data like sessions or profile pictures
-    * Sessions can be stored in a centralized data store such as a [database](#database) (SQL, NoSQL) or a persistent [cache](#cache) (Redis, Memcached)
-* Downstream servers such as caches and databases need to handle more simultaneous connections as upstream servers scale out
+#### سلبية(s): التوسع الأفقي
 
-### Disadvantage(s): load balancer
+* يُضيف التوسع الأفقي تعقيدًا ويشمل استنساخ الخوادم
+    * يجب أن تكون الخوادم بلا حالة: لا يجب أن تحتوي على أي بيانات مرتبطة بالمستخدم مثل الجلسات أو صور الملف الشخصي
+    * يمكن تخزين الجلسات في مخزن بيانات مركزي مثل [قاعدة البيانات](#قاعدة-البيانات) (SQL، NoSQL) أو [الذاكرة المؤقتة الدائمة](#الذاكرة-المؤقتة) (Redis، Memcached)
+* يحتاج الخوادم الأمامية مثل الذواكر المؤقتة وقواعد البيانات إلى التعامل مع المزيد من الاتصالات المتزامنة مع توسع الخوادم الخلفية
 
-* The load balancer can become a performance bottleneck if it does not have enough resources or if it is not configured properly.
-* Introducing a load balancer to help eliminate single points of failure results in increased complexity.
-* A single load balancer is a single point of failure, configuring multiple load balancers further increases complexity.
+### سلبية(s): موازنة ال
 
-### Source(s) and further reading
+حمولة
 
-* [NGINX architecture](https://www.nginx.com/blog/inside-nginx-how-we-designed-for-performance-scale/)
-* [HAProxy architecture guide](http://www.haproxy.org/download/1.2/doc/architecture.txt)
-* [Scalability](http://www.lecloud.net/post/7295452622/scalability-for-dummies-part-1-clones)
-* [Wikipedia](https://en.wikipedia.org/wiki/Load_balancing_(computing))
-* [Layer 4 load balancing](https://www.nginx.com/resources/glossary/layer-4-load-balancing/)
-* [Layer 7 load balancing](https://www.nginx.com/resources/glossary/layer-7-load-balancing/)
-* [ELB listener config](http://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-listener-config.html)
+* يمكن أن تصبح موازنة الحمولة عبءًا على الأداء إذا لم تكن لديها موارد كافية أو إذا لم يتم تكوينها بشكل صحيح.
+* يتسبب إدخال موازنة الحمولة للمساعدة في القضاء على نقاط الفشل الفردية في زيادة التعقيد.
+* تعد موازنة الحمولة الفردية نقطة فشل واحدة، ويزيد تكوين موازنات الحمولة المتعددة من التعقيد بشكل أكبر.
+
+### المصادر وقراءة إضافية
+
+* [هندسة NGINX](https://www.nginx.com/blog/inside-nginx-how-we-designed-for-performance-scale/)
+* [دليل هندسة HAProxy](http://www.haproxy.org/download/1.2/doc/architecture.txt)
+* [القابلية للتوسع](http://www.lecloud.net/post/7295452622/scalability-for-dummies-part-1-clones)
+* [ويكيبيديا](https://en.wikipedia.org/wiki/Load_balancing_(computing))
+* [توازن حمولة الطبقة 4](https://www.nginx.com/resources/glossary/layer-4-load-balancing/)
+* [توازن حمولة الطبقة 7](https://www.nginx.com/resources/glossary/layer-7-load-balancing/)
+* [تكوين مستمع ELB](http://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-listener-config.html)
 
 ## Reverse proxy (web server)
 
