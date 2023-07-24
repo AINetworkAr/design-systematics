@@ -751,42 +751,41 @@ AP يعد اختيارًا جيدًا إذا كانت احتياجات العم�
 * [مقدمة لـ زووكيبر](http://www.slideshare.net/sauravhaloi/introduction-to-apache-zookeeper)
 * [ما تحتاج إلى معرفته حول بناء الخدمات الصغيرة](https://cloudncode.wordpress.com/2016/07/22/msa-getting-started/)
 
-## Database
+## قاعدة البيانات
 
 <p align="center">
   <img src="http://i.imgur.com/Xkm5CXz.png">
   <br/>
-  <i><a href=https://www.youtube.com/watch?v=w95murBkYmU>Source: Scaling up to your first 10 million users</a></i>
+  <i><a href=https://www.youtube.com/watch?v=w95murBkYmU>المصدر: التوسع حتى أول 10 ملايين مستخدم</a></i>
 </p>
 
-### Relational database management system (RDBMS)
+### نظام إدارة قواعد البيانات العلاقية (RDBMS)
 
-A relational database like SQL is a collection of data items organized in tables.
+تُعتبر قاعدة البيانات العلاقية مثل SQL مجموعة من عناصر البيانات المنظمة في جداول.
 
-**ACID** is a set of properties of relational database [transactions](https://en.wikipedia.org/wiki/Database_transaction).
+**ACID** هي مجموعة من الخصائص المتعلقة بـ [المعاملات](https://en.wikipedia.org/wiki/Database_transaction) في قاعدة البيانات العلاقية.
 
-* **Atomicity** - Each transaction is all or nothing
-* **Consistency** - Any transaction will bring the database from one valid state to another
-* **Isolation** - Executing transactions concurrently has the same results as if the transactions were executed serially
-* **Durability** - Once a transaction has been committed, it will remain so
+* **الذرية (Atomicity)** - كل معاملة هي الكل أو لا شيء.
+* **الاتساق (Consistency)** - أي معاملة ستقوم بتحويل قاعدة البيانات من حالة صالحة إلى حالة أخرى.
+* **العزل (Isolation)** - تنفيذ المعاملات بتوازي له نفس النتائج كما لو أن المعاملات تم تنفيذها بشكل متسلسل.
+* **الاستدامة (Durability)** - بمجرد التأكد من المعاملة، ستظل كذلك.
 
-There are many techniques to scale a relational database: **master-slave replication**, **master-master replication**, **federation**, **sharding**, **denormalization**, and **SQL tuning**.
+هناك العديد من التقنيات لتوسيع قاعدة البيانات العلاقية: **تكرار الماستر-السلايف (Master-Slave Replication)**، **تكرار الماستر-الماستر (Master-Master Replication)**، **التحالف (Federation)**، **التجزئة (Sharding)**، **التبسيط (Denormalization)**، و **تنقيح SQL (SQL Tuning)**.
 
-#### Master-slave replication
+#### تكرار الماستر-السلايف (Master-Slave Replication)
 
-The master serves reads and writes, replicating writes to one or more slaves, which serve only reads.  Slaves can also replicate to additional slaves in a tree-like fashion.  If the master goes offline, the system can continue to operate in read-only mode until a slave is promoted to a master or a new master is provisioned.
+يخدم الماستر القراءات والكتابات، ويقوم بتكرار الكتابات إلى واحد أو أكثر من السلايف (العبيد) الذين يُقدِّمون فقط القراءات. يمكن أن يقوم السلايف أيضًا بتكرار البيانات إلى سلايفات إضافية بشكل هرمي. إذا خرج الماستر عن الخدمة، يمكن للنظام أن يستمر في وضع القراءة فقط حتى يتم ترقية أحد السلايف ليصبح ماستر أو تخصيص ماستر جديد.
 
 <p align="center">
   <img src="http://i.imgur.com/C9ioGtn.png">
   <br/>
-  <i><a href=http://www.slideshare.net/jboner/scalability-availability-stability-patterns/>Source: Scalability, availability, stability, patterns</a></i>
+  <i><a href=http://www.slideshare.net/jboner/scalability-availability-stability-patterns/>المصدر: نمط القابلية للتوسع والتوافر والاستقرار</a></i>
 </p>
 
-##### Disadvantage(s): master-slave replication
+##### سلبية(s): تكرار الماستر-السلايف (Master-Slave Replication)
 
-* Additional logic is needed to promote a slave to a master.
-* See [Disadvantage(s): replication](#disadvantages-replication) for points related to **both** master-slave and master-master.
-
+* يُحتاج إلى منطق إضافي لترقية السلايف ليصبح ماستر.
+* انظر [سلبية(s): التكرار (Replication)](#سلبيةs-التكرار-replication) للنقاط المتعلقة بكل من تكرار الماستر-السلايف وتكرار الماستر-الماستر.
 #### Master-master replication
 
 Both masters serve reads and writes and coordinate with each other on writes.  If either master goes down, the system can continue to operate with both reads and writes.
