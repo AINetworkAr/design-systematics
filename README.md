@@ -883,96 +883,100 @@ AP يعد اختيارًا جيدًا إذا كانت احتياجات العم�
 
 * [التجاوز عن التطابق الاعتيادي (Denormalization)](https://en.wikipedia.org/wiki/Denormalization)
 
-#### SQL tuning
+#### ضبط SQL (SQL tuning)
 
-SQL tuning is a broad topic and many [books](https://www.amazon.com/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=sql+tuning) have been written as reference.
+ضبط SQL هو موضوع واسع وكُتبت العديد من [الكتب](https://www.amazon.com/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=sql+tuning) كمرجع.
 
-It's important to **benchmark** and **profile** to simulate and uncover bottlenecks.
+من المهم القيام بـ **اختبار الأداء** و **التحليل الشامل** لمحاكاة واكتشاف نقاط التوقف.
 
-* **Benchmark** - Simulate high-load situations with tools such as [ab](http://httpd.apache.org/docs/2.2/programs/ab.html).
-* **Profile** - Enable tools such as the [slow query log](http://dev.mysql.com/doc/refman/5.7/en/slow-query-log.html) to help track performance issues.
+* **اختبار الأداء** - محاكاة الحمولات العالية باستخدام أدوات مثل [ab](http://httpd.apache.org/docs/2.2/programs/ab.html).
+* **التحليل الشامل** - تمكين أدوات مثل [سجل الاستعلام البطيء (slow query log)](http://dev.mysql.com/doc/refman/5.7/en/slow-query-log.html) للمساعدة في تتبع مشكلات الأداء.
 
-Benchmarking and profiling might point you to the following optimizations.
+قد يشير اختبار الأداء والتحليل الشامل إلى الأمثلة التالية.
 
-##### Tighten up the schema
+##### تحسين المخطط البياني
 
-* MySQL dumps to disk in contiguous blocks for fast access.
-* Use `CHAR` instead of `VARCHAR` for fixed-length fields.
-    * `CHAR` effectively allows for fast, random access, whereas with `VARCHAR`, you must find the end of a string before moving onto the next one.
-* Use `TEXT` for large blocks of text such as blog posts.  `TEXT` also allows for boolean searches.  Using a `TEXT` field results in storing a pointer on disk that is used to locate the text block.
-* Use `INT` for larger numbers up to 2^32 or 4 billion.
-* Use `DECIMAL` for currency to avoid floating point representation errors.
-* Avoid storing large `BLOBS`, store the location of where to get the object instead.
-* `VARCHAR(255)` is the largest number of characters that can be counted in an 8 bit number, often maximizing the use of a byte in some RDBMS.
-* Set the `NOT NULL` constraint where applicable to [improve search performance](http://stackoverflow.com/questions/1017239/how-do-null-values-affect-performance-in-a-database-search).
+* تقوم MySQL بتفريغ البيانات على القرص في كتل متجاورة للوصول السريع.
+* استخدم `CHAR` بدلاً من `VARCHAR` للحقول ذات الطول الثابت.
+    * يُسمح `CHAR` بشكل فعال بالوصول السريع والعشوائي، بينما يجب أن تجد نهاية السلسلة قبل التحرك إلى السلسلة التالية عند استخدام `VARCHAR`.
+* استخدم `TEXT` للكتل الكبيرة من النصوص مثل المقالات في المدونة. يسمح `TEXT` أيضًا بالبحث الثنائي. عند استخدام حقل `TEXT`، يتم تخزين مؤشر على القرص يُستخدم لتحديد موقع الكتلة النصية.
+* استخدم `INT` للأرقام الأكبر حتى 2^32 أو 4 مليار.
+* استخدم `DECIMAL` للعملات لتجنب أخطاء التمثيل العشري العائمة.
+* تجنب تخزين `BLOBS` الكبيرة، واحتفظ بمكان الحصول على الكائن بدلاً من ذلك.
+* `VARCHAR(255)` هو أكبر عدد من الأحرف التي يمكن حسابها في رقم 8 بت، ويقوم غالبًا بأقصى استخدام للبايت في بعض أنظمة إدارة قواعد البيانات العلائقية.
+* قم بتعيين قيد "ليس فارغًا (NOT NULL)" حيثما ينطبق ذلك لتحسين أداء البحث.
 
-##### Use good indices
+##### استخدام مؤشرات جيدة
 
-* Columns that you are querying (`SELECT`, `GROUP BY`, `ORDER BY`, `JOIN`) could be faster with indices.
-* Indices are usually represented as self-balancing [B-tree](https://en.wikipedia.org/wiki/B-tree) that keeps data sorted and allows searches, sequential access, insertions, and deletions in logarithmic time.
-* Placing an index can keep the data in memory, requiring more space.
-* Writes could also be slower since the index also needs to be updated.
-* When loading large amounts of data, it might be faster to disable indices, load the data, then rebuild the indices.
+* يمكن أن تكون الأعمدة التي تجري استعلاماتها (`SELECT`، `GROUP BY`، `ORDER BY`، `JOIN`) أسرع مع المؤشرات.
+* تُمثل المؤشرات عادة كـ [B-Tree](https://en.wikipedia.org/wiki/B-tree) تعتاد على ترتيب البيانات وتسمح بالبحث،
 
-##### Avoid expensive joins
+ الوصول التسلسلي، الإدخال والحذف في وقت لوغاريتمي.
+* وضع مؤشر يمكن أن يبقي البيانات في الذاكرة، مما يتطلب مزيدًا من المساحة.
+* قد تكون الكتابات أبطأ أيضًا حيث يجب تحديث المؤشر أيضًا.
+* عند تحميل كميات كبيرة من البيانات، قد يكون من الأسرع تعطيل المؤشرات، تحميل البيانات، ثم إعادة بناء المؤشرات.
 
-* [Denormalize](#denormalization) where performance demands it.
+##### تجنب الانضمامات المكلفة
 
-##### Partition tables
+* [اجعل النمط غير الاعتيادي (Denormalize)](#التجاوز-عن-التطابق-الاعتيادي-denormalization) عندما يكون الأداء يطلب ذلك.
 
-* Break up a table by putting hot spots in a separate table to help keep it in memory.
+##### جداول التقسيم
 
-##### Tune the query cache
+* قم بتقسيم الجداول عن طريق وضع النقاط الساخنة في جدول منفصل للمساعدة في الاحتفاظ بها في الذاكرة.
 
-* In some cases, the [query cache](https://dev.mysql.com/doc/refman/5.7/en/query-cache.html) could lead to [performance issues](https://www.percona.com/blog/2016/10/12/mysql-5-7-performance-tuning-immediately-after-installation/).
+##### ضبط ذاكرة التخزين المؤقت للاستعلام
 
-##### Source(s) and further reading: SQL tuning
+* في بعض الحالات، يمكن أن يؤدي [ذاكرة التخزين المؤقت للاستعلام](https://dev.mysql.com/doc/refman/5.7/en/query-cache.html) إلى [مشكلات الأداء](https://www.percona.com/blog/2016/10/12/mysql-5-7-performance-tuning-immediately-after-installation/).
 
-* [Tips for optimizing MySQL queries](http://aiddroid.com/10-tips-optimizing-mysql-queries-dont-suck/)
-* [Is there a good reason i see VARCHAR(255) used so often?](http://stackoverflow.com/questions/1217466/is-there-a-good-reason-i-see-varchar255-used-so-often-as-opposed-to-another-l)
-* [How do null values affect performance?](http://stackoverflow.com/questions/1017239/how-do-null-values-affect-performance-in-a-database-search)
-* [Slow query log](http://dev.mysql.com/doc/refman/5.7/en/slow-query-log.html)
+##### المصادر وقراءة إضافية: ضبط SQL
 
-### NoSQL
+* [نصائح لتحسين استعلامات MySQL](http://aiddroid.com/10-tips-optimizing-mysql-queries-dont-suck/)
+* [هل هناك سبب جيد يجعلني أرى VARCHAR(255) يُستخدم كثيرًا؟](http://stackoverflow.com/questions/1217466/is-there-a-good-reason-i-see-varchar255-used-so-often-as-opposed-to-another-l)
+* [كيف تؤثر القيم الفارغة على الأداء؟](http://stackoverflow.com/questions/1017239/how-do-null-values-affect-performance-in-a-database-search)
+* [سجل الاستعلام البطيء (slow query log)](http://dev.mysql.com/doc/refman/5.7/en/slow-query-log.html)
 
-NoSQL is a collection of data items represented in a **key-value store**, **document-store**, **wide column store**, or a **graph database**.  Data is denormalized, and joins are generally done in the application code.  Most NoSQL stores lack true ACID transactions and favor [eventual consistency](#eventual-consistency).
+### NoSQL (عدم الاستخدام النمطي للبنوك البيانات SQL)
 
-**BASE** is often used to describe the properties of NoSQL databases.  In comparison with the [CAP Theorem](#cap-theorem), BASE chooses availability over consistency.
+NoSQL هو مجموعة من عناصر البيانات الممثلة في "مخزن مفاتيح قيمة"، "مخزن الوثائق"، "مخزن الأعمدة الواسعة" أو "قاعدة بيانات الرسوم البيانية". يتم تجنيد البيانات، وعمليات الانضمام عادة تتم في كود التطبيق. معظم مخازن NoSQL لا تحتوي على معاملات ACID الصحيحة وتفضل التحكم المستقبلي.
 
-* **Basically available** - the system guarantees availability.
-* **Soft state** - the state of the system may change over time, even without input.
-* **Eventual consistency** - the system will become consistent over a period of time, given that the system doesn't receive input during that period.
+تُستخدم "BASE" في كثير من الأحيان لوصف خصائص قواعد بيانات NoSQL. في المقارنة مع [نظرية CAP (CAP Theorem)](#نظرية-cap-cap-theorem)، يختار BASE التوفر فوق التسلسل.
 
-In addition to choosing between [SQL or NoSQL](#sql-or-nosql), it is helpful to understand which type of NoSQL database best fits your use case(s).  We'll review **key-value stores**, **document-stores**, **wide column stores**, and **graph databases** in the next section.
+* **متوفر بشكل أساسي (Basically available)** - يضمن النظام التوفر.
+* **الحالة اللينة (Soft state)** - يمكن أن تتغير حالة النظام مع مرور الوقت، حتى بدون إدخال.
+* **التسوية المستقبلية (Eventual consistency)** - سيصبح النظام متسقًا على مدى فترة زمنية ما، بشرط ألا يتلقى النظام إدخالًا خلال تلك الفترة.
 
-#### Key-value store
+بالإضافة إلى اختيار بين [SQL أو NoSQL](#SQL-أو-NoSQL)، فمن المفيد أن تفهم أي نوع من قواعد بيانات NoSQL يناسب أفضل حالتك (أو حالاتك) الاستخدامية. سنستعرض **مخازن المفاتيح القيمة**، **مخازن الوثائق**، **مخازن الأعمدة الواسعة**، و**قواعد بيانات الرسوم** في القسم التالي.
 
-> Abstraction: hash table
+#### مخزن المفاتيح القيمة
 
-A key-value store generally allows for O(1) reads and writes and is often backed by memory or SSD.  Data stores can maintain keys in [lexicographic order](https://en.wikipedia.org/wiki/Lexicographical_order), allowing efficient retrieval of key ranges.  Key-value stores can allow for storing of metadata with a value.
+> التجريد: جدول تجزئة
 
-Key-value stores provide high performance and are often used for simple data models or for rapidly-changing data, such as an in-memory cache layer.  Since they offer only a limited set of operations, complexity is shifted to the application layer if additional operations are needed.
+يسمح مخزن المفاتيح القيمة عمومًا بالقراءة والكتابة O(1) وعادة ما يدعم ذلك الذاكرة أو وحدات التخزين ذات الحالة الصلبة (SSD). يمكن أن يحتفظ مخازن البيانات بالمفاتيح بترتيب [الترتيب الألفبائي](https://en.wikipedia.org/wiki/Lexicographical_order)، مما يسمح بالحصول الفعال على نطاقات مفاتيح. يمكن لمخازن المفاتيح القيمة أن تسمح بتخزين البيانات الوصفية مع قيمة.
 
-A key-value store is the basis for more complex systems such as a document store, and in some cases, a graph database.
+يوفر مخزن المفاتيح القيمة أداءً عاليًا وغالبًا ما يُستخدم لنماذج بيانات بسيطة أو للبيانات القابلة للتغيير بسرعة، مثل طبقة التخزين المحلية للذاكرة. نظرًا لأنها تقدم مجموعة محدودة من العمليات فقط، يتحول التعقيد إلى طبقة التطبيق إذا احتجت إلى عمليات إضافية.
 
-##### Source(s) and further reading: key-value store
+مخزن المفاتيح القيمة هو أساس للأنظمة الأكثر تعقيدًا مثل مخزن الوثائق، وفي بعض الحالات، قاعدة بيانات الرسم.
 
-* [Key-value database](https://en.wikipedia.org/wiki/Key-value_database)
-* [Disadvantages of key-value stores](http://stackoverflow.com/questions/4056093/what-are-the-disadvantages-of-using-a-key-value-table-over-nullable-columns-or)
-* [Redis architecture](http://qnimate.com/overview-of-redis-architecture/)
-* [Memcached architecture](https://www.adayinthelifeof.nl/2011/02/06/memcache-internals/)
+##### المصادر والقراءة الإضافية: مخزن المفاتيح القيمة
 
-#### Document store
+* [قاعدة بيانات المفاتيح القيمة](https://en.wikipedia.org/wiki/Key-value_database)
+* [عيوب مخازن المفاتيح القيمة](http://stackoverflow.com/questions/4056093/what-are-the-disadvantages-of-using-a-key-value-table-over-nullable-columns-or)
+* [هندسة Redis](http://qnimate.com/overview-of-redis-architecture/)
+* [هندسة Memcached](https://www.adayinthelifeof.nl/2011/02/06/memcache-internals/)
 
-> Abstraction: key-value store with documents stored as values
+#### مخزن الوثائق
 
-A document store is centered around documents (XML, JSON, binary, etc), where a document stores all information for a given object.  Document stores provide APIs or a query language to query based on the internal structure of the document itself.  *Note, many key-value stores include features for working with a value's metadata, blurring the lines between these two storage types.*
+> التجريد: مخزن مفاتيح قيمة حيث تُخزن الوثائق كقيم
 
-Based on the underlying implementation, documents are organized in either collections, tags, metadata, or directories.  Although documents can be organized or grouped together, documents may have fields that are completely different from each other.
+يتمحور مخزن الوثائق حول الوثائق (XML، JSON، ثنائي، إلخ)، حيث تحتوي الوثيقة على جميع المعلومات لكائن معين. يوفر مخزن الوثائق واجهات برمجة التطبيقات أو لغة استعلام للاستعلام استنادًا إلى الهيكل ال
 
-Some document stores like [MongoDB](https://www.mongodb.com/mongodb-architecture) and [CouchDB](https://blog.couchdb.org/2016/08/01/couchdb-2-0-architecture/) also provide a SQL-like language to perform complex queries.  [DynamoDB](http://www.read.seas.harvard.edu/~kohler/class/cs239-w08/decandia07dynamo.pdf) supports both key-values and documents.
+داخلي للوثيقة نفسها. *ملاحظة: تشمل العديد من مخازن المفاتيح القيمة ميزات للعمل مع بيانات التعريف، مما يجعل الحدود بين هذين النوعين من أنواع التخزين غير واضحة.*
 
-Document stores provide high flexibility and are often used for working with occasionally changing data.
+بناءً على التنفيذ الأساسي، يتم تنظيم الوثائق في مجموعات أو علامات أو بيانات تعريفية أو دلائل. على الرغم من أن الوثائق يمكن أن تُنظم أو تُجمع معًا، قد تحتوي الوثائق على حقول مختلفة تمامًا عن بعضها البعض.
+
+بعض مخازن الوثائق مثل [MongoDB](https://www.mongodb.com/mongodb-architecture) و [CouchDB](https://blog.couchdb.org/2016/08/01/couchdb-2-0-architecture/) توفر أيضًا لغة تشبه SQL لأداء الاستعلامات المعقدة. يدعم [DynamoDB](http://www.read.seas.harvard.edu/~kohler/class/cs239-w08/decandia07dynamo.pdf) كل من المفاتيح والوثائق.
+
+مخازن الوثائق توفر مرونةً عاليةً وغالبًا ما يُستخدم للعمل مع البيانات التي تتغير بين الحين والآخر.
 
 ##### Source(s) and further reading: document store
 
