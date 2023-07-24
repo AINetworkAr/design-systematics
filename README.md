@@ -395,12 +395,12 @@
 
 ## الأداء مقابل قابلية التوسع
 
-تكون الخدمة ** قابلة للتطوير ** إذا أدت إلى زيادة ** الأداء ** بطريقة تتناسب مع الموارد المضافة. بشكل عام ، تعني زيادة الأداء خدمة المزيد من وحدات العمل ، ولكن يمكن أيضًا التعامل مع وحدات عمل أكبر ، كما هو الحال عندما تنمو مجموعات البيانات.<sup><a href=http://www.allthingsdistributed.com/2006/03/a_word_on_scalability.html>1</a></sup>
+تكون الخدمة **قابلة للتطوير** إذا أدت إلى زيادة **الأداء** بطريقة تتناسب مع الموارد المضافة. بشكل عام ، تعني زيادة الأداء خدمة المزيد من وحدات العمل ، ولكن يمكن أيضًا التعامل مع وحدات عمل أكبر ، كما هو الحال عندما تنمو مجموعات البيانات.<sup><a href=http://www.allthingsdistributed.com/2006/03/a_word_on_scalability.html>1</a></sup>
 
 طريقة أخرى للنظر إلى الأداء مقابل قابلية التوسع:
 
-* إذا كانت لديك مشكلة ** في الأداء ** ، فهذا يعني أن نظامك بطيء لمستخدم واحد.
-* إذا كانت لديك مشكلة ** قابلية التوسع ** ، فإن نظامك سريع لمستخدم واحد ولكنه بطيء في ظل الحمل الثقيل.
+* إذا كانت لديك مشكلة **في الأداء** ، فهذا يعني أن نظامك بطيء لمستخدم واحد.
+* إذا كانت لديك مشكلة **قابلية التوسع** ، فإن نظامك سريع لمستخدم واحد ولكنه بطيء في ظل الحمل الثقيل.
 
 ### المصادر ومزيد من القراءة
 
@@ -553,46 +553,49 @@ AP يعد اختيارًا جيدًا إذا كانت احتياجات العم�
 * [ويكيبيديا](https://en.wikipedia.org/wiki/Domain_Name_System)
 * [مقالات DNS](https://support.dnsimple.com/categories/dns/)
 
-## Content delivery network
+## شبكة تسليم المحتوى (Content Delivery Network - CDN)
 
 <p align="center">
   <img src="http://i.imgur.com/h9TAuGI.jpg">
   <br/>
-  <i><a href=https://www.creative-artworks.eu/why-use-a-content-delivery-network-cdn/>Source: Why use a CDN</a></i>
+  <i><a href=https://www.creative-artworks.eu/why-use-a-content-delivery-network-cdn/>المصدر: لماذا استخدام شبكة تسليم المحتوى (CDN)</a></i>
 </p>
 
-A content delivery network (CDN) is a globally distributed network of proxy servers, serving content from locations closer to the user.  Generally, static files such as HTML/CSS/JS, photos, and videos are served from CDN, although some CDNs such as Amazon's CloudFront support dynamic content.  The site's DNS resolution will tell clients which server to contact.
+شبكة تسليم المحتوى (CDN) هي شبكة موزعة على نطاق عالمي تتألف من خوادم وكيل تخدم المحتوى من مواقع أقرب إلى المستخدم. بشكل عام، يتم تقديم الملفات الثابتة مثل HTML/CSS/JS والصور ومقاطع الفيديو من خلال شبكة CDN، على الرغم من أن بعض CDN مثل Amazon's CloudFront تدعم المحتوى الديناميكي أيضًا. يقوم قرار DNS للموقع بإخبار العملاء بالخادم الذي يجب عليهم التواصل معه.
 
-Serving content from CDNs can significantly improve performance in two ways:
+تسليم المحتوى من خلال CDN يمكن أن يحسن الأداء بشكل كبير بطريقتين:
 
-* Users receive content at data centers close to them
-* Your servers do not have to serve requests that the CDN fulfills
+* يتلقى المستخدمون المحتوى من مراكز البيانات القريبة منهم.
+* لا يتعين على خوادمك تلبية الطلبات التي يلبيها CDN.
 
-### Push CDNs
+### CDN الدفع
 
-Push CDNs receive new content whenever changes occur on your server.  You take full responsibility for providing content, uploading directly to the CDN and rewriting URLs to point to the CDN.  You can configure when content expires and when it is updated.  Content is uploaded only when it is new or changed, minimizing traffic, but maximizing storage.
+تتلقى CDN الدفع محتوى جديد كلما حدث تغيير على الخادم الخاص بك. أنت مسؤول تمامًا عن توفير المحتوى، حيث يتم تحميله مباشرة على CDN وإعادة كتابة عناوين URL لتشير إلى CDN. يمكنك تكوين انتهاء صلاحية المحتوى ومتى يتم تحديثه. يتم تحميل المحتوى فقط عندما يكون جديدًا أو تغير، مما يقلل من حركة المرور ولكن يزيد من التخزين.
 
-Sites with a small amount of traffic or sites with content that isn't often updated work well with push CDNs.  Content is placed on the CDNs once, instead of being re-pulled at regular intervals.
+تعمل CDN الدفع بشكل جيد مع المواقع التي تتمتع بحركة مرور قليلة أو المواقع التي لا يتم تحديث محتواها بانتظام. يتم وضع المحتوى على CDN مرة واحدة، بدلاً من استرجاعه بفترات منتظمة.
 
-### Pull CDNs
+### CDN الاستحضار
 
-Pull CDNs grab new content from your server when the first user requests the content.  You leave the content on your server and rewrite URLs to point to the CDN.  This results in a slower request until the content is cached on the CDN.
+تقوم CDN الاستحضار بجلب محتوى جديد من الخادم الخاص بك عندما يطلب المستخدم الأول المحتوى. تترك المحتوى على الخادم الخاص بك وتعيد كتابة عناوين URL لتشير إلى CDN. يؤدي ذلك إلى طلب أبطأ حتى يتم تخزين المحتوى على CDN.
 
-A [time-to-live (TTL)](https://en.wikipedia.org/wiki/Time_to_live) determines how long content is cached.  Pull CDNs minimize storage space on the CDN, but can create redundant traffic if files expire and are pulled before they have actually changed.
+يحدد [زمن العيش (TTL)](https://en.wikipedia.org/wiki/Time_to_live) مدة الاستحضار للمحتوى. تقلل CDN الاستحضار من مساحة التخزين على CDN، ولكن يمكن أن تسبب حركة مرور متكررة إذا انتهت صلاحية الملفات واستعيدت قبل أن تتغير فعليًا.
 
-Sites with heavy traffic work well with pull CDNs, as traffic is spread out more evenly with only recently-requested content remaining on the CDN.
+تعمل CDN الاستحضار بشكل جيد مع المواقع
 
-### Disadvantage(s): CDN
+ التي تتمتع بحركة مرور كثيفة، حيث يتم توزيع حركة المرور بشكل أكثر تناسبًا مع وجود المحتوى الذي طلب مؤخرًا فقط على CDN.
 
-* CDN costs could be significant depending on traffic, although this should be weighed with additional costs you would incur not using a CDN.
-* Content might be stale if it is updated before the TTL expires it.
-* CDNs require changing URLs for static content to point to the CDN.
+### سلبية(s): CDN
 
-### Source(s) and further reading
+* يمكن أن تكون تكاليف CDN كبيرة اعتمادًا على حجم المرور، على الرغم من أنه يجب وزن ذلك مقابل التكاليف الإضافية التي قد تتكبدها في حالة عدم استخدام CDN.
+* يمكن أن يكون المحتوى غير محدث إذا تم تحديثه قبل انتهاء صلاحية TTL.
+* تتطلب CDN تغيير عناوين URL للمحتوى الثابت للإشارة إلى CDN.
 
-* [Globally distributed content delivery](http://repository.cmu.edu/cgi/viewcontent.cgi?article=2112&context=compsci)
-* [The differences between push and pull CDNs](http://www.travelblogadvice.com/technical/the-differences-between-push-and-pull-cdns/)
-* [Wikipedia](https://en.wikipedia.org/wiki/Content_delivery_network)
+### المصادر وقراءة إضافية
+
+* [توزيع المحتوى على نطاق عالمي](http://repository.cmu.edu/cgi/viewcontent.cgi?article=2112&context=compsci)
+* [الاختلافات بين CDN الدفع وCDN الاستحضار](http://www.travelblogadvice.com/technical/the-differences-between-push-and-pull-cdns/)
+* [ويكيبيديا](https://en.wikipedia.org/wiki/Content_delivery_network)
+
 
 ## Load balancer
 
