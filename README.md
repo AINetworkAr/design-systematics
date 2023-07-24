@@ -816,26 +816,26 @@ AP يعد اختيارًا جيدًا إذا كانت احتياجات العم�
 * [نمط القابلية للتوسع والتوافر والاستقرار](http://www.slideshare.net/jboner/scalability-availability-stability-patterns/)
 * [تكرار الماستر-الماستر (Multi-master replication)](https://en.wikipedia.org/wiki/Multi-master_replication)
 
-#### Federation
+#### التوحيد (Federation)
 
 <p align="center">
   <img src="http://i.imgur.com/U3qV33e.png">
   <br/>
-  <i><a href=https://www.youtube.com/watch?v=w95murBkYmU>Source: Scaling up to your first 10 million users</a></i>
+  <i><a href=https://www.youtube.com/watch?v=w95murBkYmU>المصدر: القابلية للتوسع حتى أول 10 مليون مستخدم</a></i>
 </p>
 
-Federation (or functional partitioning) splits up databases by function.  For example, instead of a single, monolithic database, you could have three databases: **forums**, **users**, and **products**, resulting in less read and write traffic to each database and therefore less replication lag.  Smaller databases result in more data that can fit in memory, which in turn results in more cache hits due to improved cache locality.  With no single central master serializing writes you can write in parallel, increasing throughput.
+يقوم التوحيد (أو التجزئة الوظيفية) بتجزئة قواعد البيانات حسب الوظيفة. على سبيل المثال، بدلاً من قاعدة بيانات واحدة ضخمة، يمكن أن يكون لديك ثلاث قواعد بيانات: **المنتديات (forums)**، **المستخدمون (users)**، و **المنتجات (products)**، مما يؤدي إلى تقليل حركة القراءة والكتابة على كل قاعدة بيانات وبالتالي تقليل تأخير التكرار. تؤدي القواعد البيانات الأصغر حجمًا إلى زيادة كمية البيانات التي يمكن أن تتناسب في الذاكرة، مما يؤدي بدوره إلى زيادة نجاحات التخزين المؤقت (الكاش) بسبب تحسين المواقع المؤقتة. بدون ماستر مركزي واحد يقوم بتسلسل الكتابات، يمكنك الكتابة بشكل متوازٍ، مما يزيد من الإنتاجية.
 
-##### Disadvantage(s): federation
+##### سلبية(s): التوحيد (Federation)
 
-* Federation is not effective if your schema requires huge functions or tables.
-* You'll need to update your application logic to determine which database to read and write.
-* Joining data from two databases is more complex with a [server link](http://stackoverflow.com/questions/5145637/querying-data-by-joining-two-tables-in-two-database-on-different-servers).
-* Federation adds more hardware and additional complexity.
+* التوحيد غير فعال إذا كانت هناك وظائف أو جداول ضخمة تحتاج إلى مخطط كبير.
+* ستحتاج إلى تحديث منطق التطبيق الخاص بك لتحديد أي قاعدة بيانات للقراءة والكتابة.
+* التحاق البيانات من قاعدتي بيانات مختلفتين يتطلب تعقيدًا أكثر باستخدام رابط الخادم ([server link](http://stackoverflow.com/questions/5145637/querying-data-by-joining-two-tables-in-two-database-on-different-servers)).
+* التوحيد يضيف المزيد من الأجهزة والتعقيدات الإضافية.
 
-##### Source(s) and further reading: federation
+##### المصادر وقراءة إضافية: التوحيد
 
-* [Scaling up to your first 10 million users](https://www.youtube.com/watch?v=w95murBkYmU)
+* [القابلية للتوسع حتى أول 10 مليون مستخدم](https://www.youtube.com/watch?v=w95murBkYmU)
 
 #### Sharding
 
