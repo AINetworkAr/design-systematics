@@ -1542,72 +1542,74 @@ PUT /someresources/anId
 
 قد يُطلب منك أحيانًا عمل تقديرات "خلف الظهر". على سبيل المثال، قد تحتاج إلى تحديد مدة توليد 100 صورة مُصغرة من القرص أو مقدار الذاكرة اللازم لهيكل البيانات. تعتبر "جدول قوى الرقم 2" و"أرقام الكفاءة التي يجب أن يعرفها كل مبرمج" مراجع مفيدة.
 
-### Powers of two table
+### جدول قوى الرقم 2
 
 ```
-Power           Exact Value         Approx Value        Bytes
----------------------------------------------------------------
-7                             128
-8                             256
-10                           1024   1 thousand           1 KB
-16                         65,536                       64 KB
-20                      1,048,576   1 million            1 MB
-30                  1,073,741,824   1 billion            1 GB
-32                  4,294,967,296                        4 GB
-40              1,099,511,627,776   1 trillion           1 TB
+القوة        القيمة الدقيقة       القيمة التقريبية     البايتات
+--------------------------------------------------------------
+7                        128
+8                        256
+10                     1024     1 ألف               1 كيلوبايت
+16                    65,536                       64 كيلوبايت
+20                 1,048,576   1 مليون               1 ميجابايت
+30             1,073,741,824   1 مليار               1 جيجابايت
+32             4,294,967,296                       4 جيجابايت
+40         1,099,511,627,776   1 ترليون               1 تيرابايت
 ```
 
-#### Source(s) and further reading
+#### المصدر والقراءة الإضافية
 
-* [Powers of two](https://en.wikipedia.org/wiki/Power_of_two)
+* [قوى الرقم 2](https://en.wikipedia.org/wiki/Power_of_two)
 
-### Latency numbers every programmer should know
+### أرقام الكفاءة التي يجب أن يعرفها كل مبرمج
 
 ```
-Latency Comparison Numbers
+أرقام مقارنة الكفاءة
 --------------------------
-L1 cache reference                           0.5 ns
-Branch mispredict                            5   ns
-L2 cache reference                           7   ns                      14x L1 cache
-Mutex lock/unlock                          100   ns
-Main memory reference                      100   ns                      20x L2 cache, 200x L1 cache
-Compress 1K bytes with Zippy            10,000   ns       10 us
-Send 1 KB bytes over 1 Gbps network     10,000   ns       10 us
-Read 4 KB randomly from SSD*           150,000   ns      150 us          ~1GB/sec SSD
-Read 1 MB sequentially from memory     250,000   ns      250 us
-Round trip within same datacenter      500,000   ns      500 us
-Read 1 MB sequentially from SSD*     1,000,000   ns    1,000 us    1 ms  ~1GB/sec SSD, 4X memory
-Disk seek                           10,000,000   ns   10,000 us   10 ms  20x datacenter roundtrip
-Read 1 MB sequentially from 1 Gbps  10,000,000   ns   10,000 us   10 ms  40x memory, 10X SSD
-Read 1 MB sequentially from disk    30,000,000   ns   30,000 us   30 ms 120x memory, 30X SSD
-Send packet CA->Netherlands->CA    150,000,000   ns  150,000 us  150 ms
+مرجع ذاكرة L1                            0.5 نانوثانية
+توجيه خاطئ لفرع                          5   نانوثانية
+مرجع ذاكرة L2                            7   نانوثانية                  14 مرة ذاكرة L1
+قفل/فتح Mutex                           100 نانوثانية
+مرجع ذاكرة رئيسية                     100 نانوثانية                  20 مرة ذاكرة L2، 200 مرة ذاكرة L1
+ضغط 1 كيلوبايت بـ Zippy            10,000 نانوثانية       10 ميكروثانية
+إرسال 1 كيلوبايت عبر شبكة 1 جيجابت  10,000 نانوثانية       10 ميكروثانية
+قراءة 4 كيلوبايت عشوائيًا من وحدة التخزين الصلبة*       150,000 نانوثانية      150 ميكروثانية    ~1 غيغابايت/ثانية وحدة التخزين الصلبة
+قراءة 1 ميجابايت بتسلسل من الذاكرة الرئيسية        250,000 نانوثانية      250 ميكروثانية
+رحلة ذهاب وإياب داخل نفس مركز البيانات       500,000 نانوثانية      500 ميكروثانية
+قراءة 1 ميجابايت بتسلسل من وحدة التخزين الصلبة*   1,000,000 نانوثانية    1 ميكروثانية    1 ميليثانية   ~1 غيغابايت/ثانية وحدة التخزين الصلبة، 4 مرات الذاكرة الرئيسية
+البحث في القرص الصلب                        10,000,000 نانوثانية   10 ميكروثانية   10 ميليثانية   20 مرة رحلة داخل مركز البيانات
+قراءة 1 ميجابايت بتسلسل من شبكة 1 جيجابت    10,000,000 نانوثانية   10 ميكروثانية   10 ميليثانية   40 مرات الذاكرة الرئيسية، 10 مرات وحدة التخزين الصلبة
+قراءة 1 ميجابايت بتسلسل من القرص الصلب         30,000,000 نانوثانية   30 ميكروثانية   30 ميليثانية   120 مرة الذاكرة الرئيسية، 30 مرة وحدة التخزين الصلبة
+إرسال حزمة من كاليفورنيا إلى هولندا ثم إلى كاليفورنيا    150,000,000 نانوثانية  150 ميكروثانية  150 ميليثانية
 
-Notes
+ملاحظات
 -----
-1 ns = 10^-9 seconds
-1 us = 10^-6 seconds = 1,000 ns
-1 ms = 10^-3 seconds = 1,000 us = 1,000,000 ns
+1 نانوثانية = 10^-9 ثانية
+1 ميكروثانية = 10^-6 ثانية = 1,000 نانوثانية
+1 ميليثانية = 10^-3 ثانية = 1,000 ميكروثانية = 1,000,000 نانوثانية
 ```
 
-Handy metrics based on numbers above:
+مقاييس مفيدة بناءً على الأرقام أعلاه:
 
-* Read sequentially from disk at 30 MB/s
-* Read sequentially from 1 Gbps Ethernet at 100 MB/s
-* Read sequentially from SSD at 1 GB/s
-* Read sequentially from main memory at 4 GB/s
-* 6-7 world-wide round trips per second
-* 2,000 round trips per second within a data center
+* قراءة بتسلسل
 
-#### Latency numbers visualized
+ من القرص الصلب بسرعة 30 ميجابايت في الثانية.
+* قراءة بتسلسل من Ethernet بسرعة 100 ميجابايت في الثانية.
+* قراءة بتسلسل من وحدة التخزين الصلبة بسرعة 1 غيغابايت في الثانية.
+* قراءة بتسلسل من الذاكرة الرئيسية بسرعة 4 غيغابايت في الثانية.
+* 6-7 رحلات حول العالم في الثانية.
+* 2,000 رحلة داخل مركز البيانات في الثانية.
+
+#### تصور أرقام الكفاءة
 
 ![](https://camo.githubusercontent.com/77f72259e1eb58596b564d1ad823af1853bc60a3/687474703a2f2f692e696d6775722e636f6d2f6b307431652e706e67)
 
-#### Source(s) and further reading
+#### المصدر والقراءة الإضافية
 
-* [Latency numbers every programmer should know - 1](https://gist.github.com/jboner/2841832)
-* [Latency numbers every programmer should know - 2](https://gist.github.com/hellerbarde/2843375)
-* [Designs, lessons, and advice from building large distributed systems](http://www.cs.cornell.edu/projects/ladis2009/talks/dean-keynote-ladis2009.pdf)
-* [Software Engineering Advice from Building Large-Scale Distributed Systems](https://static.googleusercontent.com/media/research.google.com/en//people/jeff/stanford-295-talk.pdf)
+* [أرقام الكفاءة التي يجب أن يعرفها كل مبرمج - 1](https://gist.github.com/jboner/2841832)
+* [أرقام الكفاءة التي يجب أن يعرفها كل مبرمج - 2](https://gist.github.com/hellerbarde/2843375)
+* [تصميمات ودروس ونصائح من بناء الأنظمة الموزعة الكبيرة](http://www.cs.cornell.edu/projects/ladis2009/talks/dean-keynote-ladis2009.pdf)
+* [نصائح هندسة البرمجيات من بناء الأنظمة الموزعة الكبيرة](https://static.googleusercontent.com/media/research.google.com/en//people/jeff/stanford-295-talk.pdf)
 
 ### Additional system design interview questions
 
