@@ -1228,55 +1228,55 @@ def set_user(user_id, values):
 * عند إنشاء عقدة جديدة بسبب الفشل أو التوسع، لن تقوم العقدة الجديدة بتخزين الإدخالات حتى يتم تحديث الإدخال في قاعدة البيانات. يمكن أن يُخفف الكاش الجانبي بالتزامن مع الكتابة المباشرة هذه المشكلة.
 * قد يتم كتابة معظم البيانات التي لا يتم قراءتها أبدًا، والتي يمكن تقليلها بواسطة TTL.
 
-#### Write-behind (write-back)
+#### الكتابة الخلفية (الكتابة العاودة)
 
 <p align="center">
   <img src="http://i.imgur.com/rgSrvjG.png">
   <br/>
-  <i><a href=http://www.slideshare.net/jboner/scalability-availability-stability-patterns/>Source: Scalability, availability, stability, patterns</a></i>
+  <i><a href=http://www.slideshare.net/jboner/scalability-availability-stability-patterns/>المصدر: قابلية التوسع والتوفر والاستقرار، أنماط</a></i>
 </p>
 
-In write-behind, the application does the following:
+في الكتابة الخلفية، يقوم التطبيق بما يلي:
 
-* Add/update entry in cache
-* Asynchronously write entry to the data store, improving write performance
+* إضافة / تحديث الإدخال في الكاش
+* كتابة الإدخال إلى مخزن البيانات بشكل غير متزامن، مما يحسن أداء الكتابة
 
-##### Disadvantage(s): write-behind
+##### عيب (عيوب) الكتابة الخلفية
 
-* There could be data loss if the cache goes down prior to its contents hitting the data store.
-* It is more complex to implement write-behind than it is to implement cache-aside or write-through.
+* قد يكون هناك فقدان للبيانات إذا تعطل الكاش قبل وصول محتوياته إلى مخزن البيانات.
+* من الأكثر تعقيدًا تنفيذ الكتابة الخلفية من تنفيذ الكاش الجانبي أو الكتابة المباشرة.
 
-#### Refresh-ahead
+#### التحديث المسبق
 
 <p align="center">
   <img src="http://i.imgur.com/kxtjqgE.png">
   <br/>
-  <i><a href=http://www.slideshare.net/tmatyashovsky/from-cache-to-in-memory-data-grid-introduction-to-hazelcast>Source: From cache to in-memory data grid</a></i>
+  <i><a href=http://www.slideshare.net/tmatyashovsky/from-cache-to-in-memory-data-grid-introduction-to-hazelcast>المصدر: من الكاش إلى الشبكة البيانات في الذاكرة</a></i>
 </p>
 
-You can configure the cache to automatically refresh any recently accessed cache entry prior to its expiration.
+يمكنك تكوين الكاش لتحديث تلقائيًا أي إدخال مخزن في الكاش تم الوصول إليه حديثًا قبل انتهاء صلاحيته.
 
-Refresh-ahead can result in reduced latency vs read-through if the cache can accurately predict which items are likely to be needed in the future.
+قد يؤدي التحديث المسبق إلى تقليل التأخير مقارنة بالقراءة المباشرة إذا كان يمكن للكاش توقع العناصر التي من المحتمل أن تكون مطلوبة في المستقبل.
 
-##### Disadvantage(s): refresh-ahead
+##### عيب (عيوب) التحديث المسبق
 
-* Not accurately predicting which items are likely to be needed in the future can result in reduced performance than without refresh-ahead.
+* عدم التنبؤ الدقيق بالعناصر التي من المحتمل أن تكون مطلوبة في المستقبل يمكن أن يؤدي إلى تقليل الأداء مقارنة بدون التحديث المسبق.
 
-### Disadvantage(s): cache
+### عيب (عيوب) الكاش
 
-* Need to maintain consistency between caches and the source of truth such as the database through [cache invalidation](https://en.wikipedia.org/wiki/Cache_algorithms).
-* Cache invalidation is a difficult problem, there is additional complexity associated with when to update the cache.
-* Need to make application changes such as adding Redis or memcached.
+* الحاجة إلى الحفاظ على التناسق بين الكاشات ومصدر الحقيقة مثل قاعدة البيانات من خلال إبطال الكاش.
+* إبطال الكاش هو مشكلة صعبة، وهناك تعقيدات إضافية مرتبطة بمتى يتم تحديث الكاش.
+* الحاجة إلى إجراء تغييرات في التطبيق مثل إضافة Redis أو memcached.
 
-### Source(s) and further reading
+### المصادر وقراءة إضافية
 
-* [From cache to in-memory data grid](http://www.slideshare.net/tmatyashovsky/from-cache-to-in-memory-data-grid-introduction-to-hazelcast)
-* [Scalable system design patterns](http://horicky.blogspot.com/2010/10/scalable-system-design-patterns.html)
-* [Introduction to architecting systems for scale](http://lethain.com/introduction-to-architecting-systems-for-scale/)
-* [Scalability, availability, stability, patterns](http://www.slideshare.net/jboner/scalability-availability-stability-patterns/)
-* [Scalability](http://www.lecloud.net/post/9246290032/scalability-for-dummies-part-3-cache)
-* [AWS ElastiCache strategies](http://docs.aws.amazon.com/AmazonElastiCache/latest/UserGuide/Strategies.html)
-* [Wikipedia](https://en.wikipedia.org/wiki/Cache_(computing))
+* [من الكاش إلى الشبكة البيانات في الذاكرة](http://www.slideshare.net/tmatyashovsky/from-cache-to-in-memory-data-grid-introduction-to-hazelcast)
+* [أنماط تصميم الأنظمة القابلة للتوسع](http://horicky.blogspot.com/2010/10/scalable-system-design-patterns.html)
+* [مقدمة لتصميم الأنظمة المعمارية للتوسع](http://lethain.com/introduction-to-architecting-systems-for-scale/)
+* [قابلية التوسع والتوفر والاستقرار، أنماط](http://www.slideshare.net/jboner/scalability-availability-stability-patterns/)
+* [قابلية التوسع](http://www.lecloud.net/post/9246290032/scalability-for-dummies-part-3-cache)
+* [استراتيجيات AWS ElastiCache](http://docs.aws.amazon.com/AmazonElastiCache/latest/UserGuide/Strategies.html)
+* [ويكيبيديا](https://en.wikipedia.org/wiki/Cache_(computing))
 
 ## Asynchronism
 
