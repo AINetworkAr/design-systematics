@@ -1157,22 +1157,22 @@ NoSQL هي مجموعة من عناصر البيانات الممثلة في "م
 
 نظرًا لأنه يمكنك تخزين كمية محدودة من البيانات في الكاش، ستحتاج إلى تحديد أفضل استراتيجية لتحديث الكاش وفقًا لحالتك الاستخدامية.
 
-#### Cache-aside
+## الكاش جانبي
 
 <p align="center">
   <img src="http://i.imgur.com/ONjORqk.png">
   <br/>
-  <i><a href=http://www.slideshare.net/tmatyashovsky/from-cache-to-in-memory-data-grid-introduction-to-hazelcast>Source: From cache to in-memory data grid</a></i>
+  <i><a href=http://www.slideshare.net/tmatyashovsky/from-cache-to-in-memory-data-grid-introduction-to-hazelcast>المصدر: من الكاش إلى الشبكة البيانات في الذاكرة</a></i>
 </p>
 
-The application is responsible for reading and writing from storage.  The cache does not interact with storage directly.  The application does the following:
+تكون التطبيق مسؤولة عن القراءة والكتابة من وإلى التخزين. الكاش لا يتفاعل مباشرةً مع التخزين. يقوم التطبيق بما يلي:
 
-* Look for entry in cache, resulting in a cache miss
-* Load entry from the database
-* Add entry to cache
-* Return entry
+* البحث عن الإدخال في الكاش، مما يؤدي إلى عدم وجود الإدخال في الكاش
+* تحميل الإدخال من قاعدة البيانات
+* إضافة الإدخال إلى الكاش
+* إرجاع الإدخال
 
-```
+```python
 def get_user(self, user_id):
     user = cache.get("user.{0}", user_id)
     if user is None:
@@ -1183,50 +1183,50 @@ def get_user(self, user_id):
     return user
 ```
 
-[Memcached](https://memcached.org/) is generally used in this manner.
+عادةً ما يتم استخدام [Memcached](https://memcached.org/) بهذه الطريقة.
 
-Subsequent reads of data added to cache are fast.  Cache-aside is also referred to as lazy loading.  Only requested data is cached, which avoids filling up the cache with data that isn't requested.
+القراءات التالية للبيانات المضافة إلى الكاش سريعة. يُشار أيضًا إلى الكاش الجانبي باسم التحميل الكسول. يتم تخزين البيانات المطلوبة فقط في الكاش، مما يتجنب ملء الكاش بالبيانات التي لم يتم طلبها.
 
-##### Disadvantage(s): cache-aside
+##### عيب (عيوب) الكاش الجانبي
 
-* Each cache miss results in three trips, which can cause a noticeable delay.
-* Data can become stale if it is updated in the database.  This issue is mitigated by setting a time-to-live (TTL) which forces an update of the cache entry, or by using write-through.
-* When a node fails, it is replaced by a new, empty node, increasing latency.
+* كل عدم وجود في الكاش يؤدي إلى ثلاث جولات، مما يمكن أن يتسبب في تأخير واضح.
+* يمكن أن تصبح البيانات غير حديثة إذا تم تحديثها في قاعدة البيانات. يتم التخفيف من هذه المشكلة من خلال تعيين وقت الحياة (TTL) الذي يجبر تحديث إدخال الكاش، أو باستخدام الكتابة مباشرةً.
+* عند فشل العقدة، يتم استبدالها بعقدة جديدة وفارغة، مما يزيد من التأخير.
 
-#### Write-through
+### الكتابة مباشرة
 
 <p align="center">
   <img src="http://i.imgur.com/0vBc0hN.png">
   <br/>
-  <i><a href=http://www.slideshare.net/jboner/scalability-availability-stability-patterns/>Source: Scalability, availability, stability, patterns</a></i>
+  <i><a href=http://www.slideshare.net/jboner/scalability-availability-stability-patterns/>المصدر: قابلية التوسع والتوفر والاستقرار، أنماط</a></i>
 </p>
 
-The application uses the cache as the main data store, reading and writing data to it, while the cache is responsible for reading and writing to the database:
+يستخدم التطبيق الكاش كمخزن رئيسي للبيانات، حيث يقوم بقراءة وكتابة البيانات فيه، في حين يكون الكاش مسؤولًا عن القراءة والكتابة إلى قاعدة البيانات:
 
-* Application adds/updates entry in cache
-* Cache synchronously writes entry to data store
-* Return
+* يضيف / يحدث التطبيق الإدخال في الكاش
+* يكتب الكاش الإدخال بشكل متزامن إلى مخزن البيانات
+* العودة
 
-Application code:
+كود التطبيق:
 
-```
+```python
 set_user(12345, {"foo":"bar"})
 ```
 
-Cache code:
+كود الكاش:
 
-```
+```python
 def set_user(user_id, values):
     user = db.query("UPDATE Users WHERE id = {0}", user_id, values)
     cache.set(user_id, user)
 ```
 
-Write-through is a slow overall operation due to the write operation, but subsequent reads of just written data are fast.  Users are generally more tolerant of latency when updating data than reading data.  Data in the cache is not stale.
+الكتابة المباشرة هي عملية بطيئة بشكل عام بسبب العملية الكتابة، ولكن القراءات التالية للبيانات التي تم كتابتها للتو سريعة. يكون المستخدمون عمومًا أكثر تسامحًا تجاه التأخير عند تحديث البيانات من قراءة البيانات. البيانات في الكاش ليست غير حديثة.
 
-##### Disadvantage(s): write through
+##### عيب (عيوب) الكتابة المباشرة
 
-* When a new node is created due to failure or scaling, the new node will not cache entries until the entry is updated in the database.  Cache-aside in conjunction with write through can mitigate this issue.
-* Most data written might never read, which can be minimized with a TTL.
+* عند إنشاء عقدة جديدة بسبب الفشل أو التوسع، لن تقوم العقدة الجديدة بتخزين الإدخالات حتى يتم تحديث الإدخال في قاعدة البيانات. يمكن أن يُخفف الكاش الجانبي بالتزامن مع الكتابة المباشرة هذه المشكلة.
+* قد يتم كتابة معظم البيانات التي لا يتم قراءتها أبدًا، والتي يمكن تقليلها بواسطة TTL.
 
 #### Write-behind (write-back)
 
