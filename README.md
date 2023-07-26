@@ -1084,76 +1084,78 @@ NoSQL هي مجموعة من عناصر البيانات الممثلة في "م
 * [التوسع لتصل إلى أول 10 مليون مستخدم](https://www.youtube.com/watch?v=w95murBkYmU)
 * [اختلافات SQL مقابل بدون SQL](https://www.sitepoint.com/sql-vs-nosql-differences/)
 
-## Cache
+## الذاكرة المخبأة (الكاش)
 
 <p align="center">
   <img src="http://i.imgur.com/Q6z24La.png">
   <br/>
-  <i><a href=http://horicky.blogspot.com/2010/10/scalable-system-design-patterns.html>Source: Scalable system design patterns</a></i>
+  <i><a href=http://horicky.blogspot.com/2010/10/scalable-system-design-patterns.html>المصدر: أنماط تصميم الأنظمة القابلة للتوسع</a></i>
 </p>
 
-Caching improves page load times and can reduce the load on your servers and databases.  In this model, the dispatcher will first lookup if the request has been made before and try to find the previous result to return, in order to save the actual execution.
+يُحسّن الكاش وقت تحميل الصفحات ويُمكن أن يُقلّل من العبء على الخوادم وقواعد البيانات الخاصة بك. في هذا النموذج، سيقوم المرسِل أولاً بالتحقق مما إذا كان قد تمت المطالبة من قبل ويحاول العثور على النتيجة السابقة لإعادة الاستجابة بها، وذلك لحفظ التنفيذ الفعلي.
 
-Databases often benefit from a uniform distribution of reads and writes across its partitions.  Popular items can skew the distribution, causing bottlenecks.  Putting a cache in front of a database can help absorb uneven loads and spikes in traffic.
+غالبًا ما تستفيد قواعد البيانات من توزيع متساوٍ للقراءات والكتابات عبر أجزائها. يمكن أن تُفاقِم العناصر الشائعة التوزيع، مما يتسبب في تكون الازدحامات. يمكن أن يساعد وضع ذاكرة مخبأة أمام قاعدة بيانات في استيعاب الأحمال غير المتساوية والذروات في حركة المرور.
 
-### Client caching
+### الكاش على جانب العميل
 
-Caches can be located on the client side (OS or browser), [server side](#reverse-proxy), or in a distinct cache layer.
+يمكن أن تكون الكاشات موجودة على جانب العميل (نظام التشغيل أو المتصفح)، [جانب الخادم](#الوكيل-العكسي)، أو في طبقة كاش متميزة.
 
-### CDN caching
+### الكاش على الشبكة العالمية
 
-[CDNs](#content-delivery-network) are considered a type of cache.
+يُعتبر [شبكات توزيع المحتوى (CDNs)](#شبكة-توزيع-المحتوى) نوعًا من الكاش.
 
-### Web server caching
+### الكاش على خادم الويب
 
-[Reverse proxies](#reverse-proxy-web-server) and caches such as [Varnish](https://www.varnish-cache.org/) can serve static and dynamic content directly.  Web servers can also cache requests, returning responses without having to contact application servers.
+[الوكلاء العكسيون](#الوكيل-العكسي-لخادم-الويب) والكاشات مثل [فارنيش](https://www.varnish-cache.org/) يمكن أن يقدموا المحتوى الثابت والديناميكي مباشرةً. يمكن لخوادم الويب أيضًا كاش الطلبات، وإعادة الاستجابات دون الحاجة للاتصال بخوادم التطبيق.
 
-### Database caching
+### الكاش على قاعدة البيانات
 
-Your database usually includes some level of caching in a default configuration, optimized for a generic use case.  Tweaking these settings for specific usage patterns can further boost performance.
+عادةً ما تتضمن قاعدة البيانات الخاصة بك بعض مستوى من الكاش في التكوين الافتراضي، مُحسّنًة لحالة استخدام عامة. يمكن ضبط هذه الإعدادات لأنماط الاستخدام المحددة لزيادة الأداء بشكل أكبر.
 
-### Application caching
+### الكاش في التطبيق
 
-In-memory caches such as Memcached and Redis are key-value stores between your application and your data storage.  Since the data is held in RAM, it is much faster than typical databases where data is stored on disk.  RAM is more limited than disk, so [cache invalidation](https://en.wikipedia.org/wiki/Cache_algorithms) algorithms such as [least recently used (LRU)](https://en.wikipedia.org/wiki/Cache_algorithms#Least_Recently_Used) can help invalidate 'cold' entries and keep 'hot' data in RAM.
+توجد الكاشات في الذاكرة مثل Memcached و Redis ومخازن المفاتيح والقيم بين تطبيقك وتخزين البيانات الخاص بك. نظرًا لأن البيانات مُحتفظ بها في الذاكرة العشوائية (RAM)، فهي أسرع بكثير من قواعد البيانات التقليدية حيث يتم تخزين البيانات على القرص. يكون الذاكرة العشوائية أكثر قيودًا من القرص، لذلك يمكن أن تساعد خوارزميات إبطال الكاش مثل (LRU) [الاستخدام الأقل للمرة الأخيرة](https://en.wikipedia.org/wiki/Cache_algorithms#Least_Recently_Used) على إبطال الإدخالات 'الباردة' والاحتفاظ بالبيانات 'الساخنة' في الذاكرة العشوائية.
 
-Redis has the following additional features:
+يحتوي Redis على الميزات الإضافية التالية:
 
-* Persistence option
-* Built-in data structures such as sorted sets and lists
+* خيار الاستمرارية
+* هياكل البيانات المدمجة مثل المجموعات المرتبة والقوائم
 
-There are multiple levels you can cache that fall into two general categories: **database queries** and **objects**:
+يمكنك تخزين عدة مستويات من الكاش تندرج تحت فئتين عامتين: **استعلامات قاعدة البيانات** و**الكائنات**:
 
-* Row level
-* Query-level
-* Fully-formed serializable objects
-* Fully-rendered HTML
+* مستوى الصف
+* مستوى الاستعلام
+* الكائنات المتسلسلة بالكامل
+* صفحات HTML المُجهّزة بالكامل
 
-Generally, you should try to avoid file-based caching, as it makes cloning and auto-scaling more difficult.
+عمومًا، يجب أن تحاول تجنب الكاش المعتمد على الملفات،
 
-### Caching at the database query level
+ حيث يجعل استنساخ التطبيق والتوسع التلقائي أكثر صعوبة.
 
-Whenever you query the database, hash the query as a key and store the result to the cache.  This approach suffers from expiration issues:
+### الكاش على مستوى استعلام قاعدة البيانات
 
-* Hard to delete a cached result with complex queries
-* If one piece of data changes such as a table cell, you need to delete all cached queries that might include the changed cell
+كلما قمت بالاستعلام عن قاعدة البيانات، قُم بتجزئة الاستعلام كمفتاح وقم بتخزين النتيجة في الكاش. هذا النهج يعاني من مشكلات انتهاء الصلاحية:
 
-### Caching at the object level
+* من الصعب حذف نتيجة مخزنة في الكاش عندما يكون لديك استعلامات معقدة
+* إذا تغيرت قطعة واحدة من البيانات مثل خلية الجدول، فإنه يتعين عليك حذف جميع الاستعلامات المخزنة في الكاش التي قد تتضمن الخلية المتغيرة
 
-See your data as an object, similar to what you do with your application code.  Have your application assemble the dataset from the database into a class instance or a data structure(s):
+### الكاش على مستوى الكائنات
 
-* Remove the object from cache if its underlying data has changed
-* Allows for asynchronous processing: workers assemble objects by consuming the latest cached object
+انظر إلى بياناتك على أنها كائن، بشكل مماثل لما تفعله مع كود التطبيق الخاص بك. ليقوم التطبيق بتجميع مجموعة البيانات من قاعدة البيانات إلى مثيل فئة أو هيكل بيانات:
 
-Suggestions of what to cache:
+* قُم بإزالة الكائن من الكاش إذا تغيرت بياناته الأساسية
+* يتيح لك القدرة على المعالجة الغير متزامنة: تجميع الكائنات من خلال استهلاك الكائن المُحفوظ الأحدث
 
-* User sessions
-* Fully rendered web pages
-* Activity streams
-* User graph data
+اقتراحات للعناصر التي يُمكن تخزينها في الكاش:
 
-### When to update the cache
+* جلسات المستخدم
+* صفحات الويب المجهزة بالكامل
+* تيارات النشاط
+* بيانات رسم بياني للمستخدمين
 
-Since you can only store a limited amount of data in cache, you'll need to determine which cache update strategy works best for your use case.
+### متى تحديث الكاش
+
+نظرًا لأنه يمكنك تخزين كمية محدودة من البيانات في الكاش، ستحتاج إلى تحديد أفضل استراتيجية لتحديث الكاش وفقًا لحالتك الاستخدامية.
 
 #### Cache-aside
 
