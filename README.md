@@ -1008,75 +1008,81 @@ NoSQL هي مجموعة من عناصر البيانات الممثلة في "م
 * [هندسة برمجيات HBase](https://www.mapr.com/blog/in-depth-look-hbase-architecture)
 * [هندسة برمجيات Cassandra](http://docs.datastax.com/en/archived/cassandra/2.0/cassandra/architecture/architectureIntro_c.html)
 
-#### Graph database
+#### قاعدة بيانات الرسوم البيانية
+
+<p align="center">
+  <img src="http://i.imgur.com/fNcl65g.png">
+  <br/>#### قاعدة بيانات الرسوم البيانية
 
 <p align="center">
   <img src="http://i.imgur.com/fNcl65g.png">
   <br/>
-  <i><a href=https://en.wikipedia.org/wiki/File:GraphDatabase_PropertyGraph.png>Source: Graph database</a></i>
+  <i><a href=https://en.wikipedia.org/wiki/File:GraphDatabase_PropertyGraph.png>المصدر: قاعدة بيانات الرسوم البيانية</a></i>
 </p>
 
-> Abstraction: graph
+> التجريد: الرسم البياني
 
-In a graph database, each node is a record and each arc is a relationship between two nodes.  Graph databases are optimized to represent complex relationships with many foreign keys or many-to-many relationships.
+في قاعدة بيانات الرسم البياني، كل عقدة هي سجل وكل قوس هو علاقة بين عقدتين. تم تحسين قواعد بيانات الرسم البياني لتمثيل العلاقات المعقدة مع العديد من المفاتيح الخارجية أو العلاقات الكثير إلى الكثير.
 
-Graphs databases offer high performance for data models with complex relationships, such as a social network.  They are relatively new and are not yet widely-used; it might be more difficult to find development tools and resources.  Many graphs can only be accessed with [REST APIs](#representational-state-transfer-rest).
+تقدم قواعد بيانات الرسم البياني أداءً عاليًا لنماذج البيانات ذات العلاقات المعقدة، مثل الشبكات الاجتماعية. إنها جديدة نسبيًا ولم يتم استخدامها على نطاق واسع حتى الآن؛ قد يكون من الأصعب العثور على أدوات التطوير والموارد. يمكن الوصول إلى العديد من الرسوم البيانية فقط باستخدام [واجهات برمجة التطبيقات باستخدام بروتوكول نقل الحالة التمثيلية (REST)](#rest).
 
-##### Source(s) and further reading: graph
+##### المصدر(ات) والقراءة الإضافية: الرسم البياني
 
-* [Graph database](https://en.wikipedia.org/wiki/Graph_database)
-* [Neo4j](https://neo4j.com/)
-* [FlockDB](https://blog.twitter.com/2010/introducing-flockdb)
+* [قاعدة بيانات الرسم البياني](https://en.wikipedia.org/wiki/Graph_database)
+* [نيوفورج](https://neo4j.com/)
+* [فلوك دي بي](https://blog.twitter.com/2010/introducing-flockdb)
 
-#### Source(s) and further reading: NoSQL
+#### المصدر(ات) والقراءة الإضافية: بدون SQL
 
-* [Explanation of base terminology](http://stackoverflow.com/questions/3342497/explanation-of-base-terminology)
-* [NoSQL databases a survey and decision guidance](https://medium.com/baqend-blog/nosql-databases-a-survey-and-decision-guidance-ea7823a822d#.wskogqenq)
-* [Scalability](http://www.lecloud.net/post/7994751381/scalability-for-dummies-part-2-database)
-* [Introduction to NoSQL](https://www.youtube.com/watch?v=qI_g07C_Q5I)
-* [NoSQL patterns](http://horicky.blogspot.com/2009/11/nosql-patterns.html)
+* [تفسير المصطلحات الأساسية](http://stackoverflow.com/questions/3342497/explanation-of-base-terminology)
+* [قواعد بيانات بدون SQL - مسح وإرشادات القرار](https://medium.com/baqend-blog/nosql-databases-a-survey-and-decision-guidance-ea7823a822d#.wskogqenq)
+* [قابلية التوسعية](http://www.lecloud.net/post/7994751381/scalability-for-dummies-part-2-database)
+* [مقدمة إلى بدون SQL](https://www.youtube.com/watch?v=qI_g07C_Q5I)
+* [أنماط بدون SQL](http://horicky.blogspot.com/2009/11/nosql-patterns.html)
 
-### SQL or NoSQL
+### SQL أو بدون SQL
 
 <p align="center">
   <img src="http://i.imgur.com/wXGqG5f.png">
   <br/>
-  <i><a href=https://www.infoq.com/articles/Transition-RDBMS-NoSQL/>Source: Transitioning from RDBMS to NoSQL</a></i>
+  <i><a href=https://www.infoq.com/articles/Transition-RDBMS-NoSQL/>المصدر: الانتقال من RDBMS إلى بدون SQL</a></i>
 </p>
 
-Reasons for **SQL**:
+أسباب استخدام **SQL**:
 
-* Structured data
-* Strict schema
-* Relational data
-* Need for complex joins
-* Transactions
-* Clear patterns for scaling
-* More established: developers, community, code, tools, etc
-* Lookups by index are very fast
+* بيانات منظمة
+* مخطط صارم
+* بيانات ذات علاقة
+* الحاجة إلى الانضمامات المعقدة
+* المعاملات
+* أنماط واضحة للتوسع
+* أكثر استقرارًا: المطورين والمجتمع والشيفرة والأد
 
-Reasons for **NoSQL**:
+وات، إلخ.
+* البحث بالفهرس سريع جدًا
 
-* Semi-structured data
-* Dynamic or flexible schema
-* Non-relational data
-* No need for complex joins
-* Store many TB (or PB) of data
-* Very data intensive workload
-* Very high throughput for IOPS
+أسباب استخدام **بدون SQL**:
 
-Sample data well-suited for NoSQL:
+* بيانات شبه منظمة
+* مخطط مرن أو ديناميكي
+* بيانات غير ذات علاقة
+* لا حاجة للانضمامات المعقدة
+* تخزين العديد من تيرابايت (أو بيتابايت) من البيانات
+* عبء عمل مكثف للبيانات
+* طاقة عالية جدًا لإجراءات الإدخال/الإخراج
 
-* Rapid ingest of clickstream and log data
-* Leaderboard or scoring data
-* Temporary data, such as a shopping cart
-* Frequently accessed ('hot') tables
-* Metadata/lookup tables
+البيانات العينية المناسبة جيدًا لـ بدون SQL:
 
-##### Source(s) and further reading: SQL or NoSQL
+* انخراط سريع لبيانات التصفح وسجلات البيانات
+* بيانات جداول الصدارة أو النتيجة
+* البيانات المؤقتة، مثل سلة التسوق
+* الجداول المستخدمة بشكل متكرر (نشطة)
+* جداول البيانات/البحث
 
-* [Scaling up to your first 10 million users](https://www.youtube.com/watch?v=w95murBkYmU)
-* [SQL vs NoSQL differences](https://www.sitepoint.com/sql-vs-nosql-differences/)
+##### المصدر(ات) والقراءة الإضافية: SQL أو بدون SQL
+
+* [التوسع لتصل إلى أول 10 مليون مستخدم](https://www.youtube.com/watch?v=w95murBkYmU)
+* [اختلافات SQL مقابل بدون SQL](https://www.sitepoint.com/sql-vs-nosql-differences/)
 
 ## Cache
 
