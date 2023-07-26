@@ -1642,79 +1642,79 @@ nowflake/) |
 | تصميم نظام جمع القمامة | [stuffwithstuff.com](http://journal.stuffwithstuff.com/2013/12/08/babys-first-garbage-collector/)<br/>[washington.edu](http://courses.cs.washington.edu/courses/csep521/07wi/prj/rick.pdf) |
 | تصميم نظام حد الاستجابة للواجهة البرمجية | [https://stripe.com/blog/](https://stripe.com/blog/rate-limiters) |
 | إضافة سؤال لتصميم النظام | [Contribute](#contributing) |
-### Real world architectures
+### الهندسة المعمارية في العالم الحقيقي
 
-> Articles on how real world systems are designed.
+> مقالات حول كيفية تصميم الأنظمة في العالم الحقيقي.
 
 <p align="center">
   <img src="http://i.imgur.com/TcUo2fw.png">
   <br/>
-  <i><a href=https://www.infoq.com/presentations/Twitter-Timeline-Scalability>Source: Twitter timelines at scale</a></i>
+  <i><a href=https://www.infoq.com/presentations/Twitter-Timeline-Scalability>المصدر: جداول زمنية تويتر على نطاق واسع</a></i>
 </p>
 
-**Don't focus on nitty gritty details for the following articles, instead:**
+**لا تركز على التفاصيل الدقيقة في المقالات التالية، بدلاً من ذلك:**
 
-* Identify shared principles, common technologies, and patterns within these articles
-* Study what problems are solved by each component, where it works, where it doesn't
-* Review the lessons learned
+* حدد المبادئ المشتركة والتقنيات الشائعة والأنماط ضمن هذه المقالات
+* دراسة المشاكل التي يتم حلها بواسطة كل مكون، وأين يعمل، وأين لا يعمل
+* استعراض الدروس المستفادة
 
-|Type | System | Reference(s) |
+| النوع | النظام | المرجع |
 |---|---|---|
-| Data processing | **MapReduce** - Distributed data processing from Google | [research.google.com](http://static.googleusercontent.com/media/research.google.com/zh-CN/us/archive/mapreduce-osdi04.pdf) |
-| Data processing | **Spark** - Distributed data processing from Databricks | [slideshare.net](http://www.slideshare.net/AGrishchenko/apache-spark-architecture) |
-| Data processing | **Storm** - Distributed data processing from Twitter | [slideshare.net](http://www.slideshare.net/previa/storm-16094009) |
+| معالجة البيانات | **MapReduce** - معالجة بيانات موزعة من Google | [research.google.com](http://static.googleusercontent.com/media/research.google.com/zh-CN/us/archive/mapreduce-osdi04.pdf) |
+| معالجة البيانات | **Spark** - معالجة بيانات موزعة من Databricks | [slideshare.net](http://www.slideshare.net/AGrishchenko/apache-spark-architecture) |
+| معالجة البيانات | **Storm** - معالجة بيانات موزعة من Twitter | [slideshare.net](http://www.slideshare.net/previa/storm-16094009) |
 | | | |
-| Data store | **Bigtable** - Distributed column-oriented database from Google | [harvard.edu](http://www.read.seas.harvard.edu/~kohler/class/cs239-w08/chang06bigtable.pdf) |
-| Data store | **HBase** - Open source implementation of Bigtable | [slideshare.net](http://www.slideshare.net/alexbaranau/intro-to-hbase) |
-| Data store | **Cassandra** - Distributed column-oriented database from Facebook | [slideshare.net](http://www.slideshare.net/planetcassandra/cassandra-introduction-features-30103666)
-| Data store | **DynamoDB** - Document-oriented database from Amazon | [harvard.edu](http://www.read.seas.harvard.edu/~kohler/class/cs239-w08/decandia07dynamo.pdf) |
-| Data store | **MongoDB** - Document-oriented database | [slideshare.net](http://www.slideshare.net/mdirolf/introduction-to-mongodb) |
-| Data store | **Spanner** - Globally-distributed database from Google | [research.google.com](http://research.google.com/archive/spanner-osdi2012.pdf) |
-| Data store | **Memcached** - Distributed memory caching system | [slideshare.net](http://www.slideshare.net/oemebamo/introduction-to-memcached) |
-| Data store | **Redis** - Distributed memory caching system with persistence and value types | [slideshare.net](http://www.slideshare.net/dvirsky/introduction-to-redis) |
+| مخزن البيانات | **Bigtable** - قاعدة بيانات موزعة ذات توجه الأعمدة من Google | [harvard.edu](http://www.read.seas.harvard.edu/~kohler/class/cs239-w08/chang06bigtable.pdf) |
+| مخزن البيانات | **HBase** - تنفيذ مفتوح المصدر لـ Bigtable | [slideshare.net](http://www.slideshare.net/alexbaranau/intro-to-hbase) |
+| مخزن البيانات | **Cassandra** - قاعدة بيانات موزعة ذات توجه الأعمدة من Facebook | [slideshare.net](http://www.slideshare.net/planetcassandra/cassandra-introduction-features-30103666)
+| مخزن البيانات | **DynamoDB** - قاعدة بيانات توثيق موزعة من Amazon | [harvard.edu](http://www.read.seas.harvard.edu/~kohler/class/cs239-w08/decandia07dynamo.pdf) |
+| مخزن البيانات | **MongoDB** - قاعدة بيانات توثيق | [slideshare.net](http://www.slideshare.net/mdirolf/introduction-to-mongodb) |
+| مخزن البيانات | **Spanner** - قاعدة بيانات موزعة عالميًا من Google | [research.google.com](http://research.google.com/archive/spanner-osdi2012.pdf) |
+| مخزن البيانات | **Memcached** - نظام ذاكرة تخزين مؤقتة موزعة | [slideshare.net](http://www.slideshare.net/oemebamo/introduction-to-memcached) |
+| مخزن البيانات | **Redis** - نظام ذاكرة تخزين مؤقتة موزعة مع الاستمرارية وأنواع القيم | [slideshare.net](http://www.slideshare.net/dvirsky/introduction-to-redis) |
 | | | |
-| File system | **Google File System (GFS)** - Distributed file system | [research.google.com](http://static.googleusercontent.com/media/research.google.com/zh-CN/us/archive/gfs-sosp2003.pdf) |
-| File system | **Hadoop File System (HDFS)** - Open source implementation of GFS | [apache.org](https://hadoop.apache.org/docs/r1.2.1/hdfs_design.html) |
+| نظام الملفات | **نظام الملفات في Google (GFS)** - نظام الملفات الموزع | [research.google.com](http://static.googleusercontent.com/media/research.google.com/zh-CN/us/archive/gfs-sosp2003.pdf) |
+| نظام الملفات | **Hadoop File System (HDFS)** - التنفيذ مفتوح المصدر لـ GFS | [apache.org](https://hadoop.apache.org/docs/r1.2.1/hdfs_design.html) |
 | | | |
-| Misc | **Chubby** - Lock service for loosely-coupled distributed systems from Google | [research.google.com](http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/archive/chubby-osdi06.pdf) |
-| Misc | **Dapper** - Distributed systems tracing infrastructure | [research.google.com](http://static.googleusercontent.com/media/research.google.com/en//pubs/archive/36356.pdf)
-| Misc | **Kafka** - Pub/sub message queue from LinkedIn | [slideshare.net](http://www.slideshare.net/mumrah/kafka-talk-tri-hug) |
-| Misc | **Zookeeper** - Centralized infrastructure and services enabling synchronization | [slideshare.net](http://www.slideshare.net/sauravhaloi/introduction-to-apache-zookeeper) |
-| | Add an architecture | [Contribute](#contributing) |
+| متفرقات | **Chubby** - خدمة قفل لأنظمة التوزيع المتصلة بربطة من Google | [research.google.com](http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/archive/chubby-osdi06.pdf) |
+| متفرقات | **Dapper** - بنية تتبع أنظمة موزعة | [research.google.com](http://static.googleusercontent.com/media/research.google.com/en//pubs/archive/36356.pdf)
+| متفرقات | **Kafka** - طابور الرسائل المنشرة/المشتركة من LinkedIn | [slideshare.net](http://www.slideshare.net/mumrah/kafka-talk-tri-hug) |
+| متفرقات | **Zookeeper** - بنية البنية التحتية المركزية والخدمات الممكنة للتزامن | [slideshare.net](http://www.slideshare.net/sauravhaloi/introduction-to-apache-zookeeper) |
+| | أضف بنية معمارية | [Contribute](#contributing) |
 
-### Company architectures
+### الهندسة المعمارية للشركات
 
-| Company | Reference(s) |
+| الشركة | المرجع |
 |---|---|
 | Amazon | [Amazon architecture](http://highscalability.com/amazon-architecture) |
-| Cinchcast | [Producing 1,500 hours of audio every day](http://highscalability.com/blog/2012/7/16/cinchcast-architecture-producing-1500-hours-of-audio-every-d.html) |
-| DataSift | [Realtime datamining At 120,000 tweets per second](http://highscalability.com/blog/2011/11/29/datasift-architecture-realtime-datamining-at-120000-tweets-p.html) |
-| DropBox | [How we've scaled Dropbox](https://www.youtube.com/watch?v=PE4gwstWhmc) |
-| ESPN | [Operating At 100,000 duh nuh nuhs per second](http://highscalability.com/blog/2013/11/4/espns-architecture-at-scale-operating-at-100000-duh-nuh-nuhs.html) |
+| Cinchcast | [إنتاج 150
+
+0 ساعة من الصوت كل يوم](http://highscalability.com/blog/2012/7/16/cinchcast-architecture-producing-1500-hours-of-audio-every-d.html) |
+| DataSift | [Datamining في الوقت الحقيقي بمعدل 120000 تغريدة في الثانية](http://highscalability.com/blog/2011/11/29/datasift-architecture-realtime-datamining-at-120000-tweets-p.html) |
+| DropBox | [كيف نوسع Dropbox](https://www.youtube.com/watch?v=PE4gwstWhmc) |
+| ESPN | [العمل بمعدل 100000 عرض دهن دهن دهن في الثانية](http://highscalability.com/blog/2013/11/4/espns-architecture-at-scale-operating-at-100000-duh-nuh-nuhs.html) |
 | Google | [Google architecture](http://highscalability.com/google-architecture) |
-| Instagram | [14 million users, terabytes of photos](http://highscalability.com/blog/2011/12/6/instagram-architecture-14-million-users-terabytes-of-photos.html)<br/>[What powers Instagram](http://instagram-engineering.tumblr.com/post/13649370142/what-powers-instagram-hundreds-of-instances) |
-| Justin.tv | [Justin.Tv's live video broadcasting architecture](http://highscalability.com/blog/2010/3/16/justintvs-live-video-broadcasting-architecture.html) |
-| Facebook | [Scaling memcached at Facebook](https://cs.uwaterloo.ca/~brecht/courses/854-Emerging-2014/readings/key-value/fb-memcached-nsdi-2013.pdf)<br/>[TAO: Facebook’s distributed data store for the social graph](https://cs.uwaterloo.ca/~brecht/courses/854-Emerging-2014/readings/data-store/tao-facebook-distributed-datastore-atc-2013.pdf)<br/>[Facebook’s photo storage](https://www.usenix.org/legacy/event/osdi10/tech/full_papers/Beaver.pdf)<br/>[How Facebook Live Streams To 800,000 Simultaneous Viewers](http://highscalability.com/blog/2016/6/27/how-facebook-live-streams-to-800000-simultaneous-viewers.html) |
-| Flickr | [Flickr architecture](http://highscalability.com/flickr-architecture) |
-| Mailbox | [From 0 to one million users in 6 weeks](http://highscalability.com/blog/2013/6/18/scaling-mailbox-from-0-to-one-million-users-in-6-weeks-and-1.html) |
-| Netflix | [Netflix: What Happens When You Press Play?](http://highscalability.com/blog/2017/12/11/netflix-what-happens-when-you-press-play.html) |
-| Pinterest | [From 0 To 10s of billions of page views a month](http://highscalability.com/blog/2013/4/15/scaling-pinterest-from-0-to-10s-of-billions-of-page-views-a.html)<br/>[18 million visitors, 10x growth, 12 employees](http://highscalability.com/blog/2012/5/21/pinterest-architecture-update-18-million-visitors-10x-growth.html) |
-| Playfish | [50 million monthly users and growing](http://highscalability.com/blog/2010/9/21/playfishs-social-gaming-architecture-50-million-monthly-user.html) |
-| PlentyOfFish | [PlentyOfFish architecture](http://highscalability.com/plentyoffish-architecture) |
-| Salesforce | [How they handle 1.3 billion transactions a day](http://highscalability.com/blog/2013/9/23/salesforce-architecture-how-they-handle-13-billion-transacti.html) |
-| Stack Overflow | [Stack Overflow architecture](http://highscalability.com/blog/2009/8/5/stack-overflow-architecture.html) |
-| TripAdvisor | [40M visitors, 200M dynamic page views, 30TB data](http://highscalability.com/blog/2011/6/27/tripadvisor-architecture-40m-visitors-200m-dynamic-page-view.html) |
-| Tumblr | [15 billion page views a month](http://highscalability.com/blog/2012/2/13/tumblr-architecture-15-billion-page-views-a-month-and-harder.html) |
-| Twitter | [Making Twitter 10000 percent faster](http://highscalability.com/scaling-twitter-making-twitter-10000-percent-faster)<br/>[Storing 250 million tweets a day using MySQL](http://highscalability.com/blog/2011/12/19/how-twitter-stores-250-million-tweets-a-day-using-mysql.html)<br/>[150M active users, 300K QPS, a 22 MB/S firehose](http://highscalability.com/blog/2013/7/8/the-architecture-twitter-uses-to-deal-with-150m-active-users.html)<br/>[Timelines at scale](https://www.infoq.com/presentations/Twitter-Timeline-Scalability)<br/>[Big and small data at Twitter](https://www.youtube.com/watch?v=5cKTP36HVgI)<br/>[Operations at Twitter: scaling beyond 100 million users](https://www.youtube.com/watch?v=z8LU0Cj6BOU) |
-| Uber | [How Uber scales their real-time market platform](http://highscalability.com/blog/2015/9/14/how-uber-scales-their-real-time-market-platform.html)<br/>[Lessons Learned From Scaling Uber To 2000 Engineers, 1000 Services, And 8000 Git Repositories](http://highscalability.com/blog/2016/10/12/lessons-learned-from-scaling-uber-to-2000-engineers-1000-ser.html) |
-| WhatsApp | [The WhatsApp architecture Facebook bought for $19 billion](http://highscalability.com/blog/2014/2/26/the-whatsapp-architecture-facebook-bought-for-19-billion.html) |
-| YouTube | [YouTube scalability](https://www.youtube.com/watch?v=w5WVu624fY8)<br/>[YouTube architecture](http://highscalability.com/youtube-architecture) |
+| Instagram | [14 مليون مستخدم، تيرابايت من الصور](http://highscalability.com/blog/2011/12/6/instagram-architecture-14-million-users-terabytes-of-photos.html)<br/>[ما يشغل Instagram](http://instagram-engineering.tumblr.com/post/13649370142/what-powers-instagram-hundreds-of-instances) |
+| Justin.tv | [جاستن.تي في - معمارية البث المباشر للفيديو](http://highscalability.com/blog/2010/3/16/justintvs-live-video-broadcasting-architecture.html) |
+| Facebook | [توزيع memcached في Facebook](https://cs.uwaterloo.ca/~brecht/courses/854-Emerging-2014/readings/key-value/fb-memcached-nsdi-2013.pdf)<br/>[TAO: مخزن البيانات الموزع للرسم الاجتماعي](https://cs.uwaterloo.ca/~brecht/courses/854-Emerging-2014/readings/data-store/tao-facebook-distributed-datastore-atc-2013.pdf)<br/>[تخزين الصور في Facebook](https://www.usenix.org/legacy/event/osdi10/tech/full_papers/Beaver.pdf)<br/>[كيفية بث Facebook المباشر لـ 800,000 مشاهد متزامن](http://highscalability.com/blog/2016/6/27/how-facebook-live-streams-to-800000-simultaneous-viewers.html) |
+| Flickr | [معمارية Flickr](http://highscalability.com/flickr-architecture) |
+| Mailbox | [من 0 إلى مليون مستخدم في 6 أسابيع](http://highscalability.com/blog/2013/6/18/scaling-mailbox-from-0-to-one-million-users-in-6-weeks-and-1.html) |
+| Netflix | [Netflix: ماذا يحدث عندما تضغط على تشغيل؟](http://highscalability.com/blog/2017/12/11/netflix-what-happens-when-you-press-play.html) |
+| Pinterest | [من 0 إلى 10 مليارات مشاهدة صفحة شهريًا](http://highscalability.com/blog/2013/4/15/scaling-pinterest-from-0-to-10s-of-billions-of-page-views-a.html)<br/>[18 مليون زائر، نمو 10 أضعاف، 12 موظفًا](http://highscalability.com/blog/2012/5/21/pinterest-architecture-update-18-million-visitors-10x-growth.html) |
+| Playfish | [50 مليون مستخدم شهريًا ونمو](http://highscalability.com/blog/2010/9/21/playfishs-social-gaming-architecture-50-million-monthly-user.html) |
+| PlentyOfFish | [معمارية PlentyOfFish](http://highscalability.com/plentyoffish-architecture) |
+| Salesforce | [كيفية التعامل مع 1.3 مليار عملية يوميًا](http://highscalability.com/blog/2013/9/23/salesforce-architecture-how-they-handle-13-billion-transacti.html) |
+| Stack Overflow | [معمارية Stack Overflow](http://highscalability.com/blog/2009/8/5/stack-overflow-architecture.html) |
+| TripAdvisor | [40 مليون زائر، 200 مليون مشاهدة صفحة ديناميكية، 30 تيرابايت من البيانات](http://highscalability.com/blog/2011/6/27/tripadvisor-architecture-40m-visitors-200m-dynamic-page-view.html) |
+| Tumblr | [15 مليار مشاهدة صفحة شهريًا](http://highscalability.com/blog/2012/2/13/tumblr-architecture-15-billion-page-views-a-month-and-harder.html) |
+| Twitter | [جعل Twitter أسرع بنسبة 10000 في المائة](http://highscalability.com/scaling-twitter-making-twitter-10000-percent-faster)<br/>[تخزين 250 مليون تغريدة يوميًا باستخدام MySQL](http://highscalability.com/blog/2011/12/19/how-twitter-stores-250-million-tweets-a-day-using-mysql.html)<br/>[150 مليون مستخدم نشط، 300 ألف طلب في الثانية، نافذة لهبة 22 ميجابايت/ثانية](http://highscalability.com/blog/2013/7/8/the-architecture-twitter-uses-to-deal-with-150m-active-users.html)<br/>[جداول زمنية على نطاق واسع](https://www.infoq.com/presentations/Twitter-Timeline-Scalability)<br/>[بيانات كبيرة وصغيرة في Twitter](https://www.youtube.com/watch?v=5cKTP36HVgI)<br/>[العمليات في Twitter: التوس
 
-### Company engineering blogs
+ع ما بعد 100 مليون مستخدم](https://www.youtube.com/watch?v=z8LU0Cj6BOU) |
+| Uber | [كيفية توسيع منصة السوق الحية في الوقت الحقيقي لشركة Uber](http://highscalability.com/blog/2015/9/14/how-uber-scales-their-real-time-market-platform.html)<br/>[الدروس المستفادة من توسيع Uber إلى 2000 مهندس، 1000 خدمة، و8000 مستودع Git](http://highscalability.com/blog/2016/10/12/lessons-learned-from-scaling-uber-to-2000-engineers-1000-ser.html) |
+| WhatsApp | [الهندسة المعمارية لـ WhatsApp التي اشترتها Facebook بقيمة 19 مليار دولار](http://highscalability.com/blog/2014/2/26/the-whatsapp-architecture-facebook-bought-for-19-billion.html) |
+| YouTube | [توسيع قابلية التطبيق للتحكم في 15000 بالمائة لـ YouTube](https://www.youtube.com/watch?v=w5WVu624fY8)<br/>[معمارية YouTube](http://highscalability.com/youtube-architecture) |
 
-> Architectures for companies you are interviewing with.
->
-> Questions you encounter might be from the same domain.
+هذه هي مدونات الهندسة للشركات التي تتم مقابلتها:
 
 * [Airbnb Engineering](http://nerds.airbnb.com/)
 * [Atlassian Developers](https://developer.atlassian.com/blog/)
@@ -1758,26 +1758,25 @@ nowflake/) |
 * [Yelp Engineering Blog](http://engineeringblog.yelp.com/)
 * [Zynga Engineering Blog](https://www.zynga.com/blogs/engineering)
 
-#### Source(s) and further reading
+#### المصدر والمزيد من القراءة
 
-Looking to add a blog?  To avoid duplicating work, consider adding your company blog to the following repo:
+إذا كنت ترغب في إضافة مدونة، يُفضل تحميل مدونتك الخاصة إلى المستودع التالي لتجنب تكرار العمل:
 
 * [kilimchoi/engineering-blogs](https://github.com/kilimchoi/engineering-blogs)
 
-## Under development
+## قيد التطوير
 
-Interested in adding a section or helping complete one in-progress?  [Contribute](#contributing)!
+إذا كنت ترغب في إضافة قسم أو مساعدة في استكمال قسم قيد التطوير، يُمكنك [المساهمة](#contributing)!
 
-* Distributed computing with MapReduce
-* Consistent hashing
-* Scatter gather
-* [Contribute](#contributing)
+* الحوسبة الموزعة بتقنية MapReduce
+* تجزئة وتجميع البيانات
+* [المساهمة](#contributing)
 
-## Credits
+## الإقراض
 
-Credits and sources are provided throughout this repo.
+تم توفير الإقراض والمصادر في هذا المستودع.
 
-Special thanks to:
+شكر خاص لـ:
 
 * [Hired in tech](http://www.hiredintech.com/system-design/the-system-design-process/)
 * [Cracking the coding interview](https://www.amazon.com/dp/0984782850/)
@@ -1789,18 +1788,18 @@ Special thanks to:
 * [A distributed systems reading list](http://dancres.github.io/Pages/)
 * [Cracking the system design interview](http://www.puncsky.com/blog/2016/02/14/crack-the-system-design-interview/)
 
-## Contact info
+## معلومات الاتصال
 
-Feel free to contact me to discuss any issues, questions, or comments.
+لا تتردد في التواصل معي لمناقشة أي مشاكل أو استفسارات أو تعليقات.
 
-My contact info can be found on my [GitHub page](https://github.com/donnemartin).
+يمكنك العثور على معلومات الاتصال الخاصة بي على [صفحتي على GitHub](https://github.com/donnemartin).
 
-## License
+## الترخيص
 
-*I am providing code and resources in this repository to you under an open source license.  Because this is my personal repository, the license you receive to my code and resources is from me and not my employer (Facebook).*
+*أنا أقدم الكود والموارد في هذا المستودع لك تحت رخصة مفتوحة المصدر. ونظراً لأن هذا المستودع هو مستودعي الشخصي، فإن الترخيص الذي تحصل عليه للكود والموارد هو مني وليس من صاحب العمل (فيسبوك).* 
 
-    Copyright 2017 Donne Martin
+    حقوق النشر © 2017 دون مارتن
 
-    Creative Commons Attribution 4.0 International License (CC BY 4.0)
+    ترخيص المشاع الإبداعي المشترك النسبة-الترخيص بالمثل 4.0 الدولي (CC BY 4.0)
 
     http://creativecommons.org/licenses/by/4.0/
