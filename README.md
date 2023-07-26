@@ -1495,52 +1495,52 @@ PUT /someresources/anId
 
  يتم إضافة المزيد من الحقول إلى استجابة واجهة برمجة التطبيقات وسيتلقى العملاء القدامى جميع الحقول الجديدة، حتى تلك التي لا تحتاج إليها، وبالتالي، يؤدي ذلك إلى زيادة حجم الحمولة وتأخيرات أكبر.
 
-### RPC and REST calls comparison
+مقارنة استدعاءات RPC وREST
 
-| Operation | RPC | REST |
+| العملية | RPC | REST |
 |---|---|---|
-| Signup    | **POST** /signup | **POST** /persons |
-| Resign    | **POST** /resign<br/>{<br/>"personid": "1234"<br/>} | **DELETE** /persons/1234 |
-| Read a person | **GET** /readPerson?personid=1234 | **GET** /persons/1234 |
-| Read a person’s items list | **GET** /readUsersItemsList?personid=1234 | **GET** /persons/1234/items |
-| Add an item to a person’s items | **POST** /addItemToUsersItemsList<br/>{<br/>"personid": "1234";<br/>"itemid": "456"<br/>} | **POST** /persons/1234/items<br/>{<br/>"itemid": "456"<br/>} |
-| Update an item    | **POST** /modifyItem<br/>{<br/>"itemid": "456";<br/>"key": "value"<br/>} | **PUT** /items/456<br/>{<br/>"key": "value"<br/>} |
-| Delete an item | **POST** /removeItem<br/>{<br/>"itemid": "456"<br/>} | **DELETE** /items/456 |
+| التسجيل | **POST** /التسجيل | **POST** /أشخاص |
+| الاستقالة | **POST** /الاستقالة<br/>{<br/>"personid": "1234"<br/>} | **DELETE** /persons/1234 |
+| قراءة شخص | **GET** /قراءةالشخص؟personid=1234 | **GET** /persons/1234 |
+| قراءة قائمة العناصر الخاصة بشخص | **GET** /قراءةقائمةعناصرالمستخدمين؟personid=1234 | **GET** /persons/1234/items |
+| إضافة عنصر إلى قائمة العناصر الخاصة بشخص | **POST** /إضافةعنصرإلىقائمةعناصرالمستخدمين<br/>{<br/>"personid": "1234";<br/>"itemid": "456"<br/>} | **POST** /persons/1234/items<br/>{<br/>"itemid": "456"<br/>} |
+| تحديث عنصر | **POST** /تعديلعنصر<br/>{<br/>"itemid": "456";<br/>"key": "value"<br/>} | **PUT** /items/456<br/>{<br/>"key": "value"<br/>} |
+| حذف عنصر | **POST** /حذفعنصر<br/>{<br/>"itemid": "456"<br/>} | **DELETE** /items/456 |
 
 <p align="center">
-  <i><a href=https://apihandyman.io/do-you-really-know-why-you-prefer-rest-over-rpc/>Source: Do you really know why you prefer REST over RPC</a></i>
+  <i><a href=https://apihandyman.io/do-you-really-know-why-you-prefer-rest-over-rpc/>المصدر: هل تعرف حقًا لماذا تفضل REST على RPC</a></i>
 </p>
 
-#### Source(s) and further reading: REST and RPC
+#### المصدر والقراءة الإضافية: REST وRPC
 
-* [Do you really know why you prefer REST over RPC](https://apihandyman.io/do-you-really-know-why-you-prefer-rest-over-rpc/)
-* [When are RPC-ish approaches more appropriate than REST?](http://programmers.stackexchange.com/a/181186)
-* [REST vs JSON-RPC](http://stackoverflow.com/questions/15056878/rest-vs-json-rpc)
-* [Debunking the myths of RPC and REST](http://etherealbits.com/2012/12/debunking-the-myths-of-rpc-rest/)
-* [What are the drawbacks of using REST](https://www.quora.com/What-are-the-drawbacks-of-using-RESTful-APIs)
-* [Crack the system design interview](http://www.puncsky.com/blog/2016/02/14/crack-the-system-design-interview/)
+* [هل تعرف حقًا لماذا تفضل REST على RPC](https://apihandyman.io/do-you-really-know-why-you-prefer-rest-over-rpc/)
+* [متى تكون الطرق الشبيهة بـ RPC مناسبة أكثر من REST؟](http://programmers.stackexchange.com/a/181186)
+* [REST مقابل JSON-RPC](http://stackoverflow.com/questions/15056878/rest-vs-json-rpc)
+* [تفنيد الأساطير حول RPC وREST](http://etherealbits.com/2012/12/debunking-the-myths-of-rpc-rest/)
+* [ما هي العيوب في استخدام REST](https://www.quora.com/What-are-the-drawbacks-of-using-RESTful-APIs)
+* [كيف تحطم مقابلة تصميم النظام](http://www.puncsky.com/blog/2016/02/14/crack-the-system-design-interview/)
 * [Thrift](https://code.facebook.com/posts/1468950976659943/)
-* [Why REST for internal use and not RPC](http://arstechnica.com/civis/viewtopic.php?t=1190508)
+* [لماذا يُفضل REST للاستخدام الداخلي وليس RPC](http://arstechnica.com/civis/viewtopic.php?t=1190508)
 
-## Security
+## الأمان
 
-This section could use some updates.  Consider [contributing](#contributing)!
+قد تحتاج هذا القسم إلى بعض التحديثات. اعتبر [المساهمة](#contributing)!
 
-Security is a broad topic.  Unless you have considerable experience, a security background, or are applying for a position that requires knowledge of security, you probably won't need to know more than the basics:
+الأمان موضوع واسع. ما لم يكن لديك خبرة كبيرة أو خلفية في الأمان، أو تقدم لمنصب يتطلب معرفة الأمان، فمن المرجح أنك لن تحتاج إلى معرفة أكثر من الأساسيات:
 
-* Encrypt in transit and at rest.
-* Sanitize all user inputs or any input parameters exposed to user to prevent [XSS](https://en.wikipedia.org/wiki/Cross-site_scripting) and [SQL injection](https://en.wikipedia.org/wiki/SQL_injection).
-* Use parameterized queries to prevent SQL injection.
-* Use the principle of [least privilege](https://en.wikipedia.org/wiki/Principle_of_least_privilege).
+* يجب تشفير البيانات أثناء النقل وفي حالة التخزين.
+* يجب تنظيف جميع إدخالات المستخدم أو أي معاملات الإدخال المكشوفة للمستخدم لمنع [Cross-site scripting (XSS)](https://en.wikipedia.org/wiki/Cross-site_scripting) و[SQL injection](https://en.wikipedia.org/wiki/SQL_injection).
+* يجب استخدام استعلامات معلمة لمنع حقن SQL.
+* يجب استخدام مبدأ [أدنى صلاحية (Principle of least privilege)](https://en.wikipedia.org/wiki/Principle_of_least_privilege).
 
-### Source(s) and further reading
+### المصدر والقراءة الإضافية
 
-* [Security guide for developers](https://github.com/FallibleInc/security-guide-for-developers)
-* [OWASP top ten](https://www.owasp.org/index.php/OWASP_Top_Ten_Cheat_Sheet)
+* [دليل الأمان للمطورين](https://github.com/FallibleInc/security-guide-for-developers)
+* [أعلى عشرة ثغرات في OWASP](https://www.owasp.org/index.php/OWASP_Top_Ten_Cheat_Sheet)
 
-## Appendix
+## الملحق
 
-You'll sometimes be asked to do 'back-of-the-envelope' estimates.  For example, you might need to determine how long it will take to generate 100 image thumbnails from disk or how much memory a data structure will take.  The **Powers of two table** and **Latency numbers every programmer should know** are handy references.
+قد يُطلب منك أحيانًا عمل تقديرات "خلف الظهر". على سبيل المثال، قد تحتاج إلى تحديد مدة توليد 100 صورة مُصغرة من القرص أو مقدار الذاكرة اللازم لهيكل البيانات. تعتبر "جدول قوى الرقم 2" و"أرقام الكفاءة التي يجب أن يعرفها كل مبرمج" مراجع مفيدة.
 
 ### Powers of two table
 
