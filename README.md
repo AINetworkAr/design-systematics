@@ -1278,51 +1278,53 @@ def set_user(user_id, values):
 * [استراتيجيات AWS ElastiCache](http://docs.aws.amazon.com/AmazonElastiCache/latest/UserGuide/Strategies.html)
 * [ويكيبيديا](https://en.wikipedia.org/wiki/Cache_(computing))
 
-## Asynchronism
+## عدم التزامن
 
 <p align="center">
   <img src="http://i.imgur.com/54GYsSx.png">
   <br/>
-  <i><a href=http://lethain.com/introduction-to-architecting-systems-for-scale/#platform_layer>Source: Intro to architecting systems for scale</a></i>
+  <i><a href=http://lethain.com/introduction-to-architecting-systems-for-scale/#platform_layer>المصدر: مقدمة إلى تصميم أنظمة مقیسة</a></i>
 </p>
 
-Asynchronous workflows help reduce request times for expensive operations that would otherwise be performed in-line.  They can also help by doing time-consuming work in advance, such as periodic aggregation of data.
+تساعد سيناريوهات عدم التزامن في تقليل أوقات الطلب للعملیات المكلفة التي سيتم تنفیذها على التوالي. يمكن أن تساعد أيضًا من خلال أداء الأعمال التي تستغرق وقتًا طويلاً مسبقًا، مثل تجميع البيانات بشكل دوري.
 
-### Message queues
+### طوابير الرسائل (Message queues)
 
-Message queues receive, hold, and deliver messages.  If an operation is too slow to perform inline, you can use a message queue with the following workflow:
+طوابير الرسائل يستقبل ويحتفظ ويسلم الرسائل. إذا كانت العملیة بطیئة جدًا للتنفیذ بشكل تسلسلي، فيمكنك استخدام طوابير الرسائل بالسير في العملية التالية:
 
-* An application publishes a job to the queue, then notifies the user of job status
-* A worker picks up the job from the queue, processes it, then signals the job is complete
+* تقوم التطبیق بنشر وظیفة إلى الطوابير، ثم یُخطر المستخدم بحالة الوظیفة
+* یقوم العامل بالتقاط الوظیفة من الطوابير، ويقوم بتنفیذها ثم يُشعر بإکمال الوظیفة
 
-The user is not blocked and the job is processed in the background.  During this time, the client might optionally do a small amount of processing to make it seem like the task has completed.  For example, if posting a tweet, the tweet could be instantly posted to your timeline, but it could take some time before your tweet is actually delivered to all of your followers.
+المستخدم لا یتم حجبه وتتم معالجة الوظیفة في الخلفیة. خلال هذا الوقت، قد یقوم العمیل بعملیة معالجة صغیرة اختیاریة ليبدو أن المهمة قد اكتملت. على سبیل المثال، إذا قمت بنشر تغریدة، یمکن أن تظهر التغریدة على الفور في الجدول الزمني، ولكن قد یستغرق بعض الوقت حتى یتم توصیل التغریدة إلى جمیع المتابعین الخاصین بك.
 
-**Redis** is useful as a simple message broker but messages can be lost.
+**Redis** مفید كوسيط رسائل بسیط ولكن الرسائل قد تتضاءل.
 
-**RabbitMQ** is popular but requires you to adapt to the 'AMQP' protocol and manage your own nodes.
+**RabbitMQ** شائع ولكنه يتطلب التكيف مع بروتوكول 'AMQP' وإدارة العقد الخاصة بك.
 
-**Amazon SQS**, is hosted but can have high latency and has the possibility of messages being delivered twice.
+**Amazon SQS** مستضاف ولكن قد تكون لديه زمن استجابة عالي ويحتمل أن ترسل الرسائل مرتين.
 
-### Task queues
+### طوابير المهام (Task queues)
 
-Tasks queues receive tasks and their related data, runs them, then delivers their results.  They can support scheduling and can be used to run computationally-intensive jobs in the background.
+طوابير المهام يستقبل المهام والبيانات المتعلقة بها، وينفذها، ثم يُسلم نتائجها. يمكن أن يدعم جداول المهام الجدولة ويمكن استخدامها لتنفيذ وظائف محتوية على عمليات حسابية في الخلفية.
 
-**Celery** has support for scheduling and primarily has python support.
+**Celery** يدعم الجدولة وله دعم أساسي للغة البرمجة بايثون.
 
-### Back pressure
+### الضغط الخلفي (Back pressure)
 
-If queues start to grow significantly, the queue size can become larger than memory, resulting in cache misses, disk reads, and even slower performance.  [Back pressure](http://mechanical-sympathy.blogspot.com/2012/05/apply-back-pressure-when-overloaded.html) can help by limiting the queue size, thereby maintaining a high throughput rate and good response times for jobs already in the queue.  Once the queue fills up, clients get a server busy or HTTP 503 status code to try again later.  Clients can retry the request at a later time, perhaps with [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff).
+إذا بدأت الطوابير في النمو بشكل كبير، فقد يصبح حجم الطوابير أكبر من الذاكرة، مما يؤدي إلى فقدان الذاكرة المخبأة وقراءات القرص وحتى الأداء الأبطأ. الضغط الخلفي يمكن أن يساعد عن طريق تحديد حجم الطوابير بحيث يتم الحفاظ على معدل الإنتاج العالي وأوقات الاستجابة الجيدة للمهام الموجودة بالفعل في الط
 
-### Disadvantage(s): asynchronism
+وابور. بمجرد ملء الطوابير، يحصل العملاء على رمز حالة 503 لإظهار أن الخادم مشغول ويجب المحاولة مرة أخرى في وقت لاحق. يمكن للعملاء أن يعيدوا المحاولة للطلب في وقت لاحق، ربما بزمن انقطاع تصاعدي.
 
-* Use cases such as inexpensive calculations and realtime workflows might be better suited for synchronous operations, as introducing queues can add delays and complexity.
+### سلبيات العدم التزامن
 
-### Source(s) and further reading
+* بعض الحالات الاستخدام مثل الحسابات الرخيصة وسير العمل في الوقت الفعلي قد تكون أكثر مناسبة للعمليات المتزامنة، حيث أن إدخال الطوابير يمكن أن يضيف تأخيرات وتعقيدات.
 
-* [It's all a numbers game](https://www.youtube.com/watch?v=1KRYH75wgy4)
-* [Applying back pressure when overloaded](http://mechanical-sympathy.blogspot.com/2012/05/apply-back-pressure-when-overloaded.html)
-* [Little's law](https://en.wikipedia.org/wiki/Little%27s_law)
-* [What is the difference between a message queue and a task queue?](https://www.quora.com/What-is-the-difference-between-a-message-queue-and-a-task-queue-Why-would-a-task-queue-require-a-message-broker-like-RabbitMQ-Redis-Celery-or-IronMQ-to-function)
+### المصدر والقراءة الإضافية
+
+* [إنها كلها لعبة أرقام](https://www.youtube.com/watch?v=1KRYH75wgy4)
+* [تطبيق الضغط الخلفي عند التحميل الزائد](http://mechanical-sympathy.blogspot.com/2012/05/apply-back-pressure-when-overloaded.html)
+* [قانون ليتل](https://en.wikipedia.org/wiki/Little%27s_law)
+* [ما هو الفرق بين طوابير الرسائل وطوابير المهام؟](https://www.quora.com/What-is-the-difference-between-a-message-queue-and-a-task-queue-Why-would-a-task-queue-require-a-message-broker-like-RabbitMQ-Redis-Celery-or-IronMQ-to-function)
 
 ## Communication
 
