@@ -1413,26 +1413,26 @@ UDP هو بروتوكول بدون اتصال. يتم ضمان الحزم (مش�
 * [بروتوكول تحكم مستخدم](https://en.wikipedia.org/wiki/User_Datagram_Protocol)
 * [توسيع ذاكرة التخزين المؤقت في فيسبوك](http://www.cs.bu.edu/~jappavoo/jappavoo.github.com/451/papers/memcache-fb.pdf)
 
-### Remote procedure call (RPC)
+### استدعاء الإجراء عن بُعد (RPC)
 
 <p align="center">
   <img src="http://i.imgur.com/iF4Mkb5.png">
   <br/>
-  <i><a href=http://www.puncsky.com/blog/2016/02/14/crack-the-system-design-interview/>Source: Crack the system design interview</a></i>
+  <i><a href=http://www.puncsky.com/blog/2016/02/14/crack-the-system-design-interview/>المصدر: اختراق مقابلة تصميم النظام</a></i>
 </p>
 
-In an RPC, a client causes a procedure to execute on a different address space, usually a remote server.  The procedure is coded as if it were a local procedure call, abstracting away the details of how to communicate with the server from the client program.  Remote calls are usually slower and less reliable than local calls so it is helpful to distinguish RPC calls from local calls.  Popular RPC frameworks include [Protobuf](https://developers.google.com/protocol-buffers/), [Thrift](https://thrift.apache.org/), and [Avro](https://avro.apache.org/docs/current/).
+في استدعاء الإجراء عن بُعد (RPC)، يُحدث العميل إجراءً لتنفيذه في مساحة عناوين مختلفة، عادةً خادم بعيد. يتم تشفير الإجراء كما لو كان استدعاءً محليًا، مستترًا عن تفاصيل كيفية التواصل مع الخادم من برنامج العميل. تكون الاستدعاءات البعيدة عادةً أبطأ وأقل موثوقية من الاستدعاءات المحلية، لذا يكون من المفيد تمييز استدعاءات RPC عن الاستدعاءات المحلية. تتضمن أشهر أطر عمل RPC [Protobuf](https://developers.google.com/protocol-buffers/) و[Thrift](https://thrift.apache.org/) و[Avro](https://avro.apache.org/docs/current/).
 
-RPC is a request-response protocol:
+RPC هو بروتوكول طلب واستجابة:
 
-* **Client program** - Calls the client stub procedure.  The parameters are pushed onto the stack like a local procedure call.
-* **Client stub procedure** - Marshals (packs) procedure id and arguments into a request message.
-* **Client communication module** - OS sends the message from the client to the server.
-* **Server communication module** - OS passes the incoming packets to the server stub procedure.
-* **Server stub procedure** -  Unmarshalls the results, calls the server procedure matching the procedure id and passes the given arguments.
-* The server response repeats the steps above in reverse order.
+* **برنامج العميل** - يستدعي إجراء برنامج العميل. يتم دفع المعلمات على الرأس كاستدعاء للإجراء المحلي.
+* **إجراء برنامج العميل** - يحزم (يرزم) معرف الإجراء والوسائط إلى رسالة طلب.
+* **وحدة التواصل للعميل** - يقوم نظام التشغيل بإرسال الرسالة من العميل إلى الخادم.
+* **وحدة التواصل للخادم** - يمر نظام التشغيل بالحزم الواردة إلى إجراء برنامج الخادم.
+* **إجراء برنامج الخادم** - يقوم بإلغاء تجميع النتائج، ويستدعي إجراء الخادم الذي يطابق معرف الإجراء ويمر بالوسائط المعطاة.
+* تكرار الاستجابة الخادم تكرار الخطوات أعلاه بالترتيب العكسي.
 
-Sample RPC calls:
+أمثلة على استدعاءات RPC:
 
 ```
 GET /someoperation?data=anId
@@ -1444,36 +1444,38 @@ POST /anotheroperation
 }
 ```
 
-RPC is focused on exposing behaviors.  RPCs are often used for performance reasons with internal communications, as you can hand-craft native calls to better fit your use cases.
+يتركز RPC على تعريض السلوكيات. غالبًا ما يتم استخدام الاستدعاءات RPC لأسباب الأداء في الاتصالات الداخلية، حيث يمكنك إنشاء استدعاءات أصلية يدويًا لتناسب حالات الاستخدام الخاصة بك بشكل أفضل.
 
-Choose a native library (aka SDK) when:
+اختر مكتبة محلية (المعروفة أيضًا باسم مجموعة تطبيقات البرمجة) عندما:
 
-* You know your target platform.
-* You want to control how your "logic" is accessed.
-* You want to control how error control happens off your library.
-* Performance and end user experience is your primary concern.
+* تعرف هدفك الأساسي.
+* ترغب في التحكم في كيفية الوصول إلى "المنطق" الخاص بك.
+* ترغب في التحكم في كيفية حدوث الأخطاء خارج مكتبتك.
+* الأداء وتجربة المستخدم النهائي هي اهتمامك الأساسي.
 
-HTTP APIs following **REST** tend to be used more often for public APIs.
+واجهات برمجة التطبيقات التي تتبع **REST** عادةً ما تُستخدم بشكل أكثر شيوعًا للواجهات العامة.
 
-#### Disadvantage(s): RPC
+#### سلبيات استدعاء الإجراء عن بُعد (RPC)
 
-* RPC clients become tightly coupled to the service implementation.
-* A new API must be defined for every new operation or use case.
-* It can be difficult to debug RPC.
-* You might not be able to leverage existing technologies out of the box.  For example, it might require additional effort to ensure [RPC calls are properly cached](http://etherealbits.com/2012/12/debunking-the-myths-of-rpc-rest/) on caching servers such as [Squid](http://www.squid-cache.org/).
+* يصبح عملاء RPC مرتبطين بشدة بتنفيذ الخدمة.
+* يجب تحديد واجهة برمجة التطبيقات الجديدة لكل عملية أو حالة استخدام جديدة.
+* يمكن أن يكون أمرًا صعبًا استكشاف الأخطاء في استدعاء الإجراء عن بُعد.
+* قد لا تتمكن من الاستفادة من التقنيات الموجودة بالفعل في المربع. على سبيل المثال، قد يتطلب جهدًا إضافيًا لضمان [تخزين استدعاءات RPC بشكل صحيح](http://etherealbits.com/2012/12/debunking-the-myths-of-rpc-rest/) على خوادم التخزين المؤقت مثل [Squid](http://www.squid-cache.org/).
 
-### Representational state transfer (REST)
+### نقل حالة التمثيل (REST)
 
-REST is an architectural style enforcing a client/server model where the client acts on a set of resources managed by the server.  The server provides a representation of resources and actions that can either manipulate or get a new representation of resources.  All communication must be stateless and cacheable.
+REST هو نمط معماري يفرض نموذج عميل/خادم
 
-There are four qualities of a RESTful interface:
+ حيث يتفاعل العميل مع مجموعة من الموارد المُدارة بواسطة الخادم. يوفر الخادم تمثيلًا للموارد والإجراءات التي يمكنها إما التلاعب بالموارد أو الحصول على تمثيل جديد للموارد. يجب أن يكون كل التواصل بدون حالة وقابلًا للتخزين.
 
-* **Identify resources (URI in HTTP)** - use the same URI regardless of any operation.
-* **Change with representations (Verbs in HTTP)** - use verbs, headers, and body.
-* **Self-descriptive error message (status response in HTTP)** - Use status codes, don't reinvent the wheel.
-* **[HATEOAS](http://restcookbook.com/Basics/hateoas/) (HTML interface for HTTP)** - your web service should be fully accessible in a browser.
+هناك أربعة سمات لواجهة RESTful:
 
-Sample REST calls:
+* **تحديد الموارد (URI في HTTP)** - استخدم نفس URI بغض النظر عن أي عملية.
+* **تغيير مع التمثيلات (الأفعال في HTTP)** - استخدم الأفعال والترويسات والجسم.
+* **رسالة خطأ واضحة الوصف (استجابة الحالة في HTTP)** - استخدم أكواد الحالة، لا تعيد اختراع العجلة.
+* **[HATEOAS](http://restcookbook.com/Basics/hateoas/) (واجهة HTML للHTTP)** - يجب أن يكون خدمة الويب الخاصة بك مُمكنة بالكامل في المتصفح.
+
+أمثلة على استدعاءات REST:
 
 ```
 GET /someresources/anId
@@ -1482,14 +1484,16 @@ PUT /someresources/anId
 {"anotherdata": "another value"}
 ```
 
-REST is focused on exposing data.  It minimizes the coupling between client/server and is often used for public HTTP APIs.  REST uses a more generic and uniform method of exposing resources through URIs, [representation through headers](https://github.com/for-GET/know-your-http-well/blob/master/headers.md), and actions through verbs such as GET, POST, PUT, DELETE, and PATCH.  Being stateless, REST is great for horizontal scaling and partitioning.
+يتركز REST على تعريض البيانات. يُقلل من الارتباط بين العميل والخادم ويُستخدم غالبًا لواجهات برمجة التطبيقات العامة عبر HTTP. يستخدم REST طريقة أكثر عمومية وانتظامية لتعريض الموارد من خلال URI والتمثيل من خلال الرؤوس والإجراءات باستخدام الأفعال مثل GET وPOST وPUT وDELETE وPATCH. بفضل خلوه من الحالة، يُعد REST مناسبًا للتوسع الأفقي والتجزئة.
 
-#### Disadvantage(s): REST
+#### سلبيات نقل حالة التمثيل (REST)
 
-* With REST being focused on exposing data, it might not be a good fit if resources are not naturally organized or accessed in a simple hierarchy.  For example, returning all updated records from the past hour matching a particular set of events is not easily expressed as a path.  With REST, it is likely to be implemented with a combination of URI path, query parameters, and possibly the request body.
-* REST typically relies on a few verbs (GET, POST, PUT, DELETE, and PATCH) which sometimes doesn't fit your use case.  For example, moving expired documents to the archive folder might not cleanly fit within these verbs.
-* Fetching complicated resources with nested hierarchies requires multiple round trips between the client and server to render single views, e.g. fetching content of a blog entry and the comments on that entry. For mobile applications operating in variable network conditions, these multiple roundtrips are highly undesirable.
-* Over time, more fields might be added to an API response and older clients will receive all new data fields, even those that they do not need, as a result, it bloats the payload size and leads to larger latencies.
+* يُمكن أن لا يكون مناسبًا للبيانات التي لا يتم تنظيمها بشكل طبيعي أو الوصول إليها بشكل بسيط في تسلسل هرمي. على سبيل المثال، قد لا يكون من السهل توصيل جميع السجلات المُحدّثة خلال الساعة الماضية والتي تطابق مجموعة محددة من الأحداث كمسار. في حالة REST، من المرجح أن يتم تنفيذ هذا باستخدام تركيبة من مسار URI ومعلمات الاستعلام، وقد تتطلب الأمر جهدًا إضافيًا.
+* غالبًا ما يعتمد REST على عدد قليل من الأفعال (GET وPOST وPUT وDELETE وPATCH) والتي قد لا تناسب حالتك الاستخدام. على سبيل المثال، قد لا يكون تحريك الوثائق المنتهية الصلاحية إلى مجلد الأرشيف يندرج ضمن هذه الأفعال بشكل واضح.
+* يتطلب الحصول على موارد معقدة ذات تسلسلات مدمجة عدة جولات بين العميل والخادم لتقديم عرض واحد، على سبيل المثال، جلب محتوى مدخل المدونة والتعليقات على هذا المدخل. بالنسبة لتطبيقات الجوال التي تعمل في ظروف شبكة متغيرة، فإن هذه الجولات المتعددة غير المرغوب فيها.
+* مع مرور الوقت، قد
+
+ يتم إضافة المزيد من الحقول إلى استجابة واجهة برمجة التطبيقات وسيتلقى العملاء القدامى جميع الحقول الجديدة، حتى تلك التي لا تحتاج إليها، وبالتالي، يؤدي ذلك إلى زيادة حجم الحمولة وتأخيرات أكبر.
 
 ### RPC and REST calls comparison
 
