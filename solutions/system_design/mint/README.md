@@ -77,27 +77,28 @@
 * 400 طلب في الثانية = 1 مليار طلب في الشهر
 
 
-## Step 2: Create a high level design
 
-> Outline a high level design with all important components.
+## الخطوة 2: إنشاء تصميم عالي المستوى
+
+> صور تصميمًا عالي المستوى مع جميع المكونات الهامة.
 
 ![Imgur](http://i.imgur.com/E8klrBh.png)
 
-## Step 3: Design core components
+## الخطوة 3: تصميم المكونات الأساسية
 
-> Dive into details for each core component.
+> استمر في التفاصيل لكل مكون أساسي.
 
-### Use case: User connects to a financial account
+### حالة الاستخدام: المستخدم يتصل بحساب مالي
 
-We could store info on the 10 million users in a [relational database](https://github.com/donnemartin/system-design-primer#relational-database-management-system-rdbms).  We should discuss the [use cases and tradeoffs between choosing SQL or NoSQL](https://github.com/donnemartin/system-design-primer#sql-or-nosql).
+يمكننا تخزين معلومات حول 10 ملايين مستخدم في [قاعدة بيانات علاقية](https://github.com/donnemartin/system-design-primer#relational-database-management-system-rdbms). يجب أن نناقش [حالات الاستخدام والمقابلات بين اختيار SQL أو NoSQL](https://github.com/donnemartin/system-design-primer#sql-or-nosql).
 
-* The **Client** sends a request to the **Web Server**, running as a [reverse proxy](https://github.com/donnemartin/system-design-primer#reverse-proxy-web-server)
-* The **Web Server** forwards the request to the **Accounts API** server
-* The **Accounts API** server updates the **SQL Database** `accounts` table with the newly entered account info
+* **العميل** يرسل طلبًا إلى **خادم الويب**، الذي يعمل كـ [وكيل عكسي](https://github.com/donnemartin/system-design-primer#reverse-proxy-web-server)
+* يعيد **خادم الويب** الطلب إلى خادم **واجهة برمجة التطبيقات للحسابات**
+* يحدث خادم **واجهة برمجة التطبيقات للحسابات** تحديثًا لجدول **قاعدة البيانات SQL** `accounts` بمعلومات الحساب الجديدة المُدخلة
 
-**Clarify with your interviewer how much code you are expected to write**.
+**توضيح مع المقابل الخاص بك بمدى الكود الذي يُتوقع منك كتابته**.
 
-The `accounts` table could have the following structure:
+يمكن أن يكون لدى جدول `accounts` الهيكل التالي:
 
 ```
 id int NOT NULL AUTO_INCREMENT
@@ -111,9 +112,9 @@ PRIMARY KEY(id)
 FOREIGN KEY(user_id) REFERENCES users(id)
 ```
 
-We'll create an [index](https://github.com/donnemartin/system-design-primer#use-good-indices) on `id`, `user_id `, and `created_at` to speed up lookups (log-time instead of scanning the entire table) and to keep the data in memory.  Reading 1 MB sequentially from memory takes about 250 microseconds, while reading from SSD takes 4x and from disk takes 80x longer.<sup><a href=https://github.com/donnemartin/system-design-primer#latency-numbers-every-programmer-should-know>1</a></sup>
+سنقوم بإنشاء [فهرس](https://github.com/donnemartin/system-design-primer#use-good-indices) على `id` و `user_id` و `created_at` لتسريع عمليات البحث (بدلاً من فحص الجدول بأكمله) وللحفاظ على البيانات في الذاكرة. القراءة المتسلسلة لـ 1 ميغابايت من الذاكرة تستغرق حوالي 250 ميكروثانية، بينما تستغرق القراءة من وحدة التخزين SSD 4 مرات ومن القرص الصلب 80 مرة أطول.<sup><a href=https://github.com/donnemartin/system-design-primer#latency-numbers-every-programmer-should-know>1</a></sup>
 
-We'll use a public [**REST API**](https://github.com/donnemartin/system-design-primer#representational-state-transfer-rest):
+سنستخدم [**REST API**](https://github.com/donnemartin/system-design-primer#representational-state-transfer-rest) العام:
 
 ```
 $ curl -X POST --data '{ "user_id": "foo", "account_url": "bar", \
@@ -121,61 +122,26 @@ $ curl -X POST --data '{ "user_id": "foo", "account_url": "bar", \
     https://mint.com/api/v1/account
 ```
 
-For internal communications, we could use [Remote Procedure Calls](https://github.com/donnemartin/system-design-primer#remote-procedure-call-rpc).
+بالنسبة للاتصالات الداخلية، يمكننا استخدام [المكالمات الإجرائية عن بعد](https://github.com/donnemartin/system-design-primer#remote-procedure-call-rpc).
 
-Next, the service extracts transactions from the account.
+بعد ذلك، يقوم الخدمة بإخراج المعاملات من الحساب.
 
-### Use case: Service extracts transactions from the account
+### حالة الاستخدام: الخدمة تستخرج المعاملات من الحساب
 
-We'll want to extract information from an account in these cases:
+نريد استخراج المعلومات من حساب في هذه الحالات:
 
-* The user first links the account
-* The user manually refreshes the account
-* Automatically each day for users who have been active in the past 30 days
+* يقوم المستخدم أول مرة بربط الحساب
+* المستخدم يقوم يدويًا بتحديث الحساب
+* تلقائيًا كل يوم للمستخدمين الذين كانوا نشطين في الـ 30 يومًا الماضية
 
-Data flow:
+تدفق البيانات:
 
-* The **Client** sends a request to the **Web Server**
-* The **Web Server** forwards the request to the **Accounts API** server
-* The **Accounts API** server places a job on a **Queue** such as [Amazon SQS](https://aws.amazon.com/sqs/) or [RabbitMQ](https://www.rabbitmq.com/)
-    * Extracting transactions could take awhile, we'd probably want to do this [asynchronously with a queue](https://github.com/donnemartin/system-design-primer#asynchronism), although this introduces additional complexity
-* The **Transaction Extraction Service** does the following:
-    * Pulls from the **Queue** and extracts transactions for the given account from the financial institution, storing the results as raw log files in the **Object Store**
-    * Uses the **Category Service** to categorize each transaction
-    * Uses the **Budget Service** to calculate aggregate monthly spending by category
-        * The **Budget Service** uses the **Notification Service** to let users know if they are nearing or have exceeded their budget
-    * Updates the **SQL Database** `transactions` table with categorized transactions
-    * Updates the **SQL Database** `monthly_spending` table with aggregate monthly spending by category
-    * Notifies the user the transactions have completed through the **Notification Service**:
-        * Uses a **Queue** (not pictured) to asynchronously send out notifications
-
-The `transactions` table could have the following structure:
-
-```
-id int NOT NULL AUTO_INCREMENT
-created_at datetime NOT NULL
-seller varchar(32) NOT NULL
-amount decimal NOT NULL
-user_id int NOT NULL
-PRIMARY KEY(id)
-FOREIGN KEY(user_id) REFERENCES users(id)
-```
-
-We'll create an [index](https://github.com/donnemartin/system-design-primer#use-good-indices) on `id`, `user_id `, and `created_at`.
-
-The `monthly_spending` table could have the following structure:
-
-```
-id int NOT NULL AUTO_INCREMENT
-month_year date NOT NULL
-category varchar(32)
-amount decimal NOT NULL
-user_id int NOT NULL
-PRIMARY KEY(id)
-FOREIGN KEY(user_id) REFERENCES users(id)
-```
-
-We'll create an [index](https://github.com/donnemartin/system-design-primer#use-good-indices) on `id` and `user_id `.
+* **العميل** يرسل طلبًا إلى **خادم الويب**
+* يعيد **خادم الويب** الطلب إلى خادم **واجهة برمجة التطبيقات للحسابات**
+* يضع خادم **واجهة برمجة التطبيقات للحسابات** وظيفة في **صف انتظار** مثل [Amazon SQS](https://aws.amazon.com/sqs/) أو [RabbitMQ](https://www.rabbitmq.com/)
+    * قد يستغرق استخراج المعاملات وقتًا، ربما نريد القيام بذلك [بشكل غير متزامن باستخدام صف](https://github.com/donnemartin/system-design-primer#asynchronism)، وهذا يضيف تعقيدًا إضافيًا
+* تقوم **خدمة استخراج المعاملات** بما يلي:
+    * تستخر
 
 #### Category service
 
