@@ -1,80 +1,81 @@
-# Design Mint.com
+# تصميم Mint.com
 
-*Note: This document links directly to relevant areas found in the [system design topics](https://github.com/donnemartin/system-design-primer#index-of-system-design-topics) to avoid duplication.  Refer to the linked content for general talking points, tradeoffs, and alternatives.*
+*ملحوظة: يتصل هذا المستند مباشرة بالمجالات ذات الصلة الموجودة في [مواضيع تصميم النظام](https://github.com/donnemartin/system-design-primer#index-of-system-design-topics) لتجنب التكرار. يُرجى الرجوع إلى المحتوى المرتبط للحصول على نقاط النقاش العامة وميزات الاستبدال والبدائل.*
 
-## Step 1: Outline use cases and constraints
+## الخطوة 1: توضيح حالات الاستخدام والقيود
 
-> Gather requirements and scope the problem.
-> Ask questions to clarify use cases and constraints.
-> Discuss assumptions.
+> اجمع المتطلبات وحدد نطاق المشكلة.
+> اطرح الأسئلة لتوضيح حالات الاستخدام والقيود.
+> ناقش الافتراضات.
 
-Without an interviewer to address clarifying questions, we'll define some use cases and constraints.
+بدون مقابلة لتوضيح الأسئلة، سنحدد بعض حالات الاستخدام والقيود.
 
-### Use cases
+### حالات الاستخدام
 
-#### We'll scope the problem to handle only the following use cases
+#### سنحدد نطاق المشكلة للتعامل فقط مع الحالات الاستخدامية التالية
 
-* **User** connects to a financial account
-* **Service** extracts transactions from the account
-    * Updates daily
-    * Categorizes transactions
-        * Allows manual category override by the user
-        * No automatic re-categorization
-    * Analyzes monthly spending, by category
-* **Service** recommends a budget
-    * Allows users to manually set a budget
-    * Sends notifications when approaching or exceeding budget
-* **Service** has high availability
+* **المستخدم** يتصل بحساب مالي
+* **الخدمة** تستخرج المعاملات من الحساب
+    * تحديث يومي
+    * تصنيف المعاملات
+        * يسمح بتجاوز التصنيف اليدوي من قبل المستخدم
+        * لا إعادة تصنيف تلقائي
+    * تحليل الإنفاق الشهري، حسب الفئة
+* **الخدمة** توصي بميزانية
+    * يسمح للمستخدمين بتعيين ميزانية يدويًا
+    * يرسل إشعارات عندما يقتربون من الميزانية أو يتجاوزونها
+* **الخدمة** لديها توفرًا عاليًا
 
-#### Out of scope
+#### خارج النطاق
 
-* **Service** performs additional logging and analytics
+* **الخدمة** تنفذ تسجيل وتحليل إضافي
 
-### Constraints and assumptions
+### القيود والافتراضات
 
-#### State assumptions
+#### توضيح الافتراضات
 
-* Traffic is not evenly distributed
-* Automatic daily update of accounts applies only to users active in the past 30 days
-* Adding or removing financial accounts is relatively rare
-* Budget notifications don't need to be instant
-* 10 million users
-    * 10 budget categories per user = 100 million budget items
-    * Example categories:
-        * Housing = $1,000
-        * Food = $200
-        * Gas = $100
-    * Sellers are used to determine transaction category
-        * 50,000 sellers
-* 30 million financial accounts
-* 5 billion transactions per month
-* 500 million read requests per month
-* 10:1 write to read ratio
-    * Write-heavy, users make transactions daily, but few visit the site daily
+* حركة المرور غير موزعة بالتساوي
+* التحديث اليومي التلقائي للحسابات ينطبق فقط على المستخدمين النشطين في الـ 30 يومًا الماضية
+* إضافة أو إزالة الحسابات المالية نادرة نسبيًا
+* إشعارات الميزانية لا تحتاج إلى أن تكون فورية
+* 10 ملايين مستخدم
+    * 10 فئات ميزانية لكل مستخدم = 100 مليون عنصر ميزانية
+    * أمثلة للفئات:
+        * الإسكان = 1,000 دولار
+        * الطعام = 200 دولار
+        * الوقود = 100 دولار
+    * يتم استخدام البائعين لتحديد فئة المعاملة
+        * 50,000 بائع
+* 30 مليون حساب مالي
+* 5 مليار معاملة شهريًا
+* 500 مليون طلب قراءة شهريًا
+* نسبة كتابة إلى قراءة 10:1
+    * تركيز على الكتابة، حيث يقوم المستخدمون بإجراء معاملات يوميًا، ولكن القليل منهم يزورون الموقع يوميًا
 
-#### Calculate usage
+#### حساب الاستخدام
 
-**Clarify with your interviewer if you should run back-of-the-envelope usage calculations.**
+**توضيح مع المقابل ما إذا كنتم تريدون أداء حسابات استخدام سريعة.**
 
-* Size per transaction:
-    * `user_id` - 8 bytes
-    * `created_at` - 5 bytes
-    * `seller` - 32 bytes
-    * `amount` - 5 bytes
-    * Total: ~50 bytes
-* 250 GB of new transaction content per month
-    * 50 bytes per transaction * 5 billion transactions per month
-    * 9 TB of new transaction content in 3 years
-    * Assume most are new transactions instead of updates to existing ones
-* 2,000 transactions per second on average
-* 200 read requests per second on average
+* الحجم لكل معاملة:
+    * `user_id` - 8 بايت
+    * `created_at` - 5 بايت
+    * `seller` - 32 بايت
+    * `amount` - 5 بايت
+    * المجموع: حوالي 50 بايت
+* 250 جيجابايت من محتوى المعاملات الجديدة شهريًا
+    * 50 بايت لكل معاملة * 5 مليار معاملة شهريًا
+    * 9 تيرابايت من محتوى المعاملات الجديدة في 3 سنوات
+    * نفترض أن معظمها معاملات جديدة بدلاً من تحديثات للمعاملات الحالية
+* 2,000 معاملة في الثانية في المتوسط
+* 200 طلب قراءة في الثانية في المتوسط
 
-Handy conversion guide:
+دليل التحويل المفيد:
 
-* 2.5 million seconds per month
-* 1 request per second = 2.5 million requests per month
-* 40 requests per second = 100 million requests per month
-* 400 requests per second = 1 billion requests per month
+* 2.5 مليون ثانية في الشهر
+* 1 طلب في الثانية = 2.5 مليون طلب في الشهر
+* 40 طلب في الثانية = 100 مليون طلب في الشهر
+* 400 طلب في الثانية = 1 مليار طلب في الشهر
+
 
 ## Step 2: Create a high level design
 
