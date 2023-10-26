@@ -1,4 +1,24 @@
-![System Design](images/Black Clean and Minimalist Project Overview Docs Banner.gif)
+<p align="center">
+  <img src="images/Black Clean and Minimalist Project Overview Docs Banner.gif">
+  <br/>
+</p>
+
+<p align="center">
+  <img src="images/channels4_profile.jpg">
+</p>
+
+<p align="center">
+  <a href="https://github.com/Safouene1/support-palestine-banner"><img src="https://github.com/Safouene1/support-palestine-banner/blob/master/StandWithPalestine.svg" alt="#StandWithUkraine" /></a>
+</p>
+
+<p><strong>
+  هدف هذه الصفحة هو تعزيز المعرفة في مجال الذكاء الاصطناعي والتقدم التقني في العالم العربي. تبادل المعرفة وتطوير التكنولوجيا 
+</strong></p>
+<br>
+<br>
+
+
+
 <p align="center">
   <img src="images/jj3A5N8.png">
   <br/>
