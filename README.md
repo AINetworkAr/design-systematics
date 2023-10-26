@@ -1,5 +1,4 @@
-# تصميم الأنظمة
-
+![System Design](images/Black Clean and Minimalist Project Overview Docs Banner.gif)
 <p align="center">
   <img src="images/jj3A5N8.png">
   <br/>
